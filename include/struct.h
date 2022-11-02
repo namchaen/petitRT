@@ -100,6 +100,7 @@ typedef struct s_plane
 typedef struct s_cylinder
 {
 	//t_point3	point;
+	t_point3	center;
 	t_point3	center_top;
 	t_point3	center_base;
 	t_vec3		h;
