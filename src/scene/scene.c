@@ -7,9 +7,11 @@ static t_object	*object_init(void)
 	t_object	*obj;
 
 	obj = create_object(SP, create_sphere(point3(-2, 0, -5), 2), color3(0.5, 0, 0)); // obj 에 구1 추가
-	oadd(&obj, create_object(PL, create_plane(point3(0, 0, -5000), vec3(1, 2, 3)), color3 (0, 0, 0.6)));	//plane추가
-	oadd(&obj, create_object(SP, create_sphere(point3(2, 0, -5), 2), color3(0, 0.5, 0))); // obj 에 구2 추가
-	oadd(&obj, create_object(SP, create_sphere(point3(0, -1000, 0), 990), color3(1, 1, 1))); // obj 에 구3 추가
+	//oadd(&obj, create_object(PL, create_plane(point3(0, 0, -5000), vec3(1, 2, 3)), color3 (0, 0, 0.6)));	//plane추가
+	//oadd(&obj, create_object(SP, create_sphere(point3(2, 0, -5), 2), color3(0, 0.5, 0))); // obj 에 구2 추가
+	//oadd(&obj, create_object(SP, create_sphere(point3(0, -1000, 0), 990), color3(1, 1, 1))); // obj 에 구3 추가
+	oadd(&obj, create_object(CY, create_cylinder(point3(2, 0, -5), vec3(1, 100, 1), 2, 4), color3(0, 0.5, 0.5)));
+	//oadd(&obj, create_object(CY, create_cylinder(point3(2, 0, -10), vec3(5, 1, 1), 4, 8), color3(0, 0.5, 0.5))); // obj 에 구3 추가
 	return (obj);
 }
 

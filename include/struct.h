@@ -97,6 +97,18 @@ typedef struct s_plane
 	t_vec3		normal;
 }				t_plane;
 
+typedef struct s_cylinder
+{
+	//t_point3	point;
+	t_point3	center_top;
+	t_point3	center_base;
+	t_vec3		h;
+	t_vec3		normal;
+	float		radius;
+	float		radius2;
+	float		height;
+}				t_cylinder;
+
 typedef struct	s_scene
 {
 	t_camera		camera;

@@ -50,3 +50,25 @@ t_plane	*create_plane(t_point3 point, t_vec3 normal)
 	pl->normal = vdiv(normal, vnorm(normal));
 	return (pl);
 }
+
+t_cylinder	*create_cylinder(t_point3 point, t_vec3 normal, float diameter, float height)
+{
+	t_cylinder	*cy;
+
+	cy = (t_cylinder *)malloc(sizeof(t_cylinder));
+	if (!cy)
+		return (NULL);
+	cy->center_base = point;
+	//cy->normal = normal;
+	//cy->h = vmul(normal, height);
+	cy->normal = vdiv(normal, vnorm(normal));
+	cy->h = vmul(cy->normal, height);
+	cy->center_top = vadd_(point, cy->h);
+	vprnt("cy->h", &cy->h);
+	vprnt("cy->center_base", &cy->center_base);
+	vprnt("cy->center_top", &cy->center_top);
+	cy->radius = diameter / 2.0;
+	cy->radius2 = cy->radius * cy->radius;
+	cy->height = height;
+	return (cy);
+}

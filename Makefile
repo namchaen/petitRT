@@ -1,7 +1,7 @@
 NAME = buildupRT
 
 CC := cc
-FLAGS := -Wall -Werror -Wextra #-g -fsanitizer=address
+FLAGS := -Wall -Werror -Wextra -g -fsanitizer=address
 
 LFT := libft/libft.a
 MLX := mlx/libmlx.a
@@ -16,7 +16,8 @@ MAIN_SRC := $(addprefix src/main/, main.c)
 SCENE_SRC := $(addprefix src/scene/, camera.c  \
 			  object_utils.c object.c scene.c)
 RAY_SRC := $(addprefix src/ray/, ray.c phong_lighting.c \
-			  hit_plane.c hit_record.c hit_sphere.c hit.c)
+			  hit_plane.c hit_record.c hit_sphere.c hit.c \
+			  hit_cylinder.c )
 VECTOR_SRC := $(addprefix src/vector/, length.c \
 			  op_scalar.c op_vec.c product.c vector.c)
 
