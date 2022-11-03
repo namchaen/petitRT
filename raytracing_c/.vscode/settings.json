@@ -1,0 +1,13 @@
+{
+	"files.associations": {
+		"__functional_03": "c",
+		"functional": "c",
+		"ray.h": "c",
+		"struct.h": "c",
+		"mlx.h": "c",
+		"scene.h": "c",
+		"math.h": "c",
+		"vec3.h": "c",
+		"aaa": "c"
+	}
+}

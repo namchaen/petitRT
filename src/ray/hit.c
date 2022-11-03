@@ -29,5 +29,7 @@ t_bool	hit_obj(t_object *object, t_ray *ray, t_hit_record *rec)
 		hit_result = hit_sphere(object, ray, rec);
 	else if (object->type == PL)
 		hit_result = hit_plane(object, ray, rec);
+	else if (object->type == CY)
+		hit_result = hit_cylinder(object, ray, rec);
 	return (hit_result);
 }
