@@ -4,14 +4,13 @@
 static t_bool	check_root(t_cylinder *cy, t_ray *ray, t_hit_record *rec, float root)
 {
 	t_point3	p;
-	t_vec3		pc[2];
+	t_vec3		pc;
 
 	if (root < rec->tmin || rec->tmax < root)
 		return (FALSE);
 	p = ray_at(ray, root);
-	pc[0] = vsub_(p, cy->center_base);
-	pc[1] = vsub_(p, cy->center_top);
-	if (vdot(pc[0], cy->h) < 0 || vdot(pc[1], cy->h) > cy->height)
+	pc = vsub_(p, cy->center_base);
+	if (vdot(pc, cy->normal) < 0 || vdot(pc, cy->normal) > cy->height)
 		return (FALSE);
 	return (TRUE);
 }

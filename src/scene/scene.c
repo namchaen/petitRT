@@ -12,9 +12,9 @@ static t_object	*object_init(void)
 	//oadd(&obj, create_object(PL, create_plane(point3(0, 0, -5000), vec3(1, 2, 3)), color3 (0, 0, 0.6)));	//plane추가
 	//oadd(&obj, create_object(SP, create_sphere(point3(2, 0, -5), 2), color3(0, 0.5, 0))); // obj 에 구2 추가
 	//oadd(&obj, create_object(SP, create_sphere(point3(0, -1000, 0), 990), color3(1, 1, 1))); // obj 에 구3 추가
-	oadd(&obj, create_object(CY, create_cylinder(point3(-8, 0, -10), vec3(1, 0.5, 1), 4, 4), color3(0.5, 0.5, 0))); // yellow
-	// oadd(&obj, create_object(CY, create_cylinder(point3(0, 0, -10), vec3(1000, 1, 1), 4, 4), color3(0, 0.7, 0.3))); // green
-	// oadd(&obj, create_object(CY, create_cylinder(point3(0, -2, -10), vec3(1, 1000, 1), 4, 4), color3(0.5, 0, 0.5)));
+	oadd(&obj, create_object(CY, create_cylinder(point3(-6, 0.5, -10), vec3(0, 0, 1), 4, 5), color3(0.5, 0.5, 0))); // yellow
+	 oadd(&obj, create_object(CY, create_cylinder(point3(0.5, 0.5, -10), vec3(1, 0, 0), 4, 5), color3(0, 0.7, 0.3))); // green
+	 oadd(&obj, create_object(CY, create_cylinder(point3(12, -2, -10), vec3(0, 1, 0), 4, 5), color3(0.5, 0, 0.5))); // pink
 	//oadd(&obj, create_object(CY, create_cylinder(point3(2, 0, -10), vec3(5, 1, 1), 4, 8), color3(0, 0.5, 0.5))); // obj 에 구3 추가
 	return (obj);
 }

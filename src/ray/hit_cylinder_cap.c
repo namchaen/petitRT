@@ -1,14 +1,12 @@
 #include "ray.h"
 #include <math.h>
 
-static t_bool	check_base_cap(t_cylinder *cy, t_hit_record *rec, t_ray *ray, float *root)
+static t_bool	check_base_cap(t_cylinder *cy, t_ray *ray, t_hit_record *rec, float *root)
 {
 	float	dn;
 	float	t;
 	t_vec3	pc;
 
-	// pl->normal = normal or vmul(normal, -1)
-	// pl->point = center top or bottom
 	dn = vdot(ray->dir, cy->normal);
 	if (fabs(dn) <= EPSILON)
 		return (FALSE);
@@ -19,7 +17,6 @@ static t_bool	check_base_cap(t_cylinder *cy, t_hit_record *rec, t_ray *ray, floa
 	if (fabs(vdot(pc, cy->normal)) > EPSILON || vnorm(pc) > cy->radius)
 		return (FALSE);
 	*root = t;
-	printf("base cap\n");
 	return (TRUE);
 }
 
@@ -39,28 +36,20 @@ static t_bool	check_top_cap(t_cylinder *cy, t_ray *ray, t_hit_record *rec, float
 	if (fabs(vdot(pc, cy->normal)) > EPSILON || vnorm(pc) > cy->radius)
 		return (FALSE);
 	*root = t;
-	printf("top cap\n");
 	return (TRUE);
 }
 
 static t_bool	is_hit_cylinder(t_cylinder *cy, t_ray *ray, t_hit_record *rec, float *root)
 {
 	t_point3	p;
-	t_vec3		pc[2];
+	t_vec3		pc;
 
 	p = ray_at(ray, *root);
-	pc[0] = vsub_(p, cy->center_base);
-	pc[1] = vsub_(p, cy->center_top);
-	if ( fabs(vdot(pc[1], cy->normal)) > EPSILON)
-
-	if (vdot(pc[0], cy->h) < 0)
-	{
+	pc = vsub_(p, cy->center_base);
+	if (vdot(pc, cy->normal) < 0)
 		return (check_base_cap(cy, ray, rec, root));
-	}
-	if (vdot(pc[1], cy->h) > cy->height)
-	{
+	if (vdot(pc, cy->normal) > cy->height)
 		return (check_top_cap(cy, ray, rec, root));
-	}
 	return (TRUE);
 }
 
