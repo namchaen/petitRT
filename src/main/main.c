@@ -98,9 +98,10 @@ static int	ft_draw(t_rt_data *data)
 			my_mlx_pixel_put(&data->img, i, data->height - 1 - j, &color);
 			i++;
 		}
+		mlx_put_image_to_window(data->mlx, data->mlx_win, data->img.ptr, 0, 0);
 		j--;
 	}
-	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img.ptr, 0, 0);
+	//mlx_put_image_to_window(data->mlx, data->mlx_win, data->img.ptr, 0, 0);
 	return (0);
 }
 

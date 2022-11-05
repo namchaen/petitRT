@@ -1,7 +1,84 @@
 #include "ray.h"
 #include <math.h>
 
-static t_bool	check_base_cap(t_cylinder *cy, t_ray *ray, t_hit_record *rec, float *root)
+static t_bool	set_eqaution(t_eqtn *eqtn, t_cylinder *cy, t_ray *ray, t_hit_record *rec);
+static t_bool	is_hit_cylinder(t_cylinder *cy, t_ray *ray, t_hit_record *rec, t_eqtn *eqtn);
+static t_bool	check_base_cap(t_cylinder *cy, t_ray *ray, t_hit_record *rec, t_eqtn *eqtn);
+static t_bool	check_top_cap(t_cylinder *cy, t_ray *ray, t_hit_record *rec, t_eqtn *eqtn);
+
+t_bool	hit_cylinder(t_object *cy_obj, t_ray *ray, t_hit_record *rec)
+{
+	t_cylinder			*cy;
+	t_eqtn	eqtn;
+
+	cy = cy_obj->element;
+	if (set_eqaution(&eqtn, cy, ray, rec) == FALSE)
+		return (FALSE);
+	if (is_hit_cylinder(cy, ray, rec, &eqtn) == FALSE)
+		return (FALSE);
+	//rec->t = eqtn.root;
+	//rec->p = ray_at(ray, rec->t);
+	//if (eqtn.root_modified == FALSE)
+	//	// height = vdot(vsub_(ray_at(ray, rec->t), cy->center_base), cy->normal)
+	//	rec->normal = vunit(vsub_(rec->p, vadd_(cy->center_base, vmul(cy->normal, height))));
+	//else
+	//{
+	//	rec->normal = cy->normal;  // base_cap
+	//	rec->normal = vmul(cy->normal, -1); // base_cap
+	//}
+	rec->albedo = cy_obj->albedo;
+	return (TRUE);
+}
+
+static t_bool	set_eqaution(t_eqtn *eqtn, t_cylinder *cy, t_ray *ray, t_hit_record *rec)
+{
+	t_vec3	oc;
+	t_vec3	v;
+	float	v_dot_n;
+	float	w_dot_h;
+
+	v = ray->dir;
+	oc = vsub_(ray->orig, cy->center_base);
+	v_dot_n = vdot(v, cy->normal);
+	w_dot_h = vdot(oc, cy->normal);
+	eqtn->a = vnorm2(v) - v_dot_n * v_dot_n;
+	eqtn->half_b = vdot(v, oc) - v_dot_n * w_dot_h;
+	eqtn->c = vnorm2(oc) - w_dot_h * w_dot_h - cy->radius2;
+	eqtn->discriminant = eqtn->half_b * eqtn->half_b - eqtn->a * eqtn->c;
+	if (fabs(eqtn->a) <= EPSILON || eqtn->discriminant <= 0)
+		return (FALSE);
+	eqtn->sqrtd = sqrt(eqtn->discriminant);
+	eqtn->root = (-eqtn->half_b - eqtn->sqrtd) / eqtn->a;
+	if (eqtn->root < rec->tmin || rec->tmax < eqtn->root)
+	{
+		eqtn->root = (-eqtn->half_b + eqtn->sqrtd) / eqtn->a;
+		if (eqtn->root < rec->tmin || rec->tmax < eqtn->root)
+			return (FALSE);
+	}
+	eqtn->root_modified = FALSE;
+	return (TRUE);
+}
+
+static t_bool	is_hit_cylinder(t_cylinder *cy, t_ray *ray, t_hit_record *rec, t_eqtn *eqtn)
+{
+	t_point3	p;
+	t_vec3		pc;
+	float		height;
+
+	p = ray_at(ray, eqtn->root);
+	pc = vsub_(p, cy->center_base);
+	height = vdot(pc, cy->normal);
+	if (height < 0)
+		return (check_base_cap(cy, ray, rec, eqtn));
+	if (height > cy->height)
+		return (check_top_cap(cy, ray, rec, eqtn));
+	rec->t = eqtn->root;
+	rec->p = p;
+	rec->normal = vunit(vsub_(rec->p, vadd_(cy->center_base, vmul(cy->normal, height))));
+	return (TRUE);
+}
+
+static t_bool	check_base_cap(t_cylinder *cy, t_ray *ray, t_hit_record *rec, t_eqtn *eqtn)
 {
 	float	dn;
 	float	t;
@@ -16,11 +93,15 @@ static t_bool	check_base_cap(t_cylinder *cy, t_ray *ray, t_hit_record *rec, floa
 	pc = vsub_(ray_at(ray, t), cy->center_base);
 	if (fabs(vdot(pc, cy->normal)) > EPSILON || vnorm(pc) > cy->radius)
 		return (FALSE);
-	*root = t;
+	eqtn->root = t;
+	eqtn->root_modified = TRUE;
+	rec->t = eqtn->root;
+	rec->p = ray_at(ray, rec->t);
+	rec->normal = vmul(cy->normal, -1);
 	return (TRUE);
 }
 
-static t_bool	check_top_cap(t_cylinder *cy, t_ray *ray, t_hit_record *rec, float *root)
+static t_bool	check_top_cap(t_cylinder *cy, t_ray *ray, t_hit_record *rec, t_eqtn *eqtn)
 {
 	float	dn;
 	float	t;
@@ -35,68 +116,11 @@ static t_bool	check_top_cap(t_cylinder *cy, t_ray *ray, t_hit_record *rec, float
 	pc = vsub_(ray_at(ray, t), cy->center_top);
 	if (fabs(vdot(pc, cy->normal)) > EPSILON || vnorm(pc) > cy->radius)
 		return (FALSE);
-	*root = t;
-	return (TRUE);
-}
-
-static t_bool	is_hit_cylinder(t_cylinder *cy, t_ray *ray, t_hit_record *rec, float *root)
-{
-	t_point3	p;
-	t_vec3		pc;
-
-	p = ray_at(ray, *root);
-	pc = vsub_(p, cy->center_base);
-	if (vdot(pc, cy->normal) < 0)
-		return (check_base_cap(cy, ray, rec, root));
-	if (vdot(pc, cy->normal) > cy->height)
-		return (check_top_cap(cy, ray, rec, root));
-	return (TRUE);
-}
-
-
-t_bool	hit_cylinder(t_object *cy_obj, t_ray *ray, t_hit_record *rec)
-{
-	t_cylinder	*cy;
-	t_vec3		oc;
-	t_vec3		v;
-	float		v_dot_n;
-	float		w_dot_h;
-	float		a;
-	float		half_b;
-	float		c;
-	float		discriminant;
-	float		sqrtd;
-	float		root;
-
-	// w = oc;
-	// v = vunit(ray->dir);
-	// h = cy->h
-	cy = cy_obj->element;
-	v = ray->dir;	// v = vunit(ray->dir);
-	oc = vsub_(ray->orig, cy->center_base);
-	v_dot_n = vdot(v, cy->normal);
-	w_dot_h = vdot(oc, cy->normal);
-	a = vnorm2(v) - v_dot_n * v_dot_n;
-	half_b = vdot(v, oc) - v_dot_n * w_dot_h;
-	c = vnorm2(oc) - w_dot_h * w_dot_h - cy->radius2;
-	discriminant = half_b * half_b - a * c;
-	if (fabs(a) <= EPSILON || discriminant <= 0)
-		return (FALSE);
-	//if (discriminant == 0 && (vdot(v, cy->h) > 0.99 && vdot(v, cy->h) < 1.01))
-	//	return (FALSE);
-	sqrtd = sqrt(discriminant);
-	root = (-half_b - sqrtd) / a;
-	if (root < rec->tmin || rec->tmax < root)
-	{
-		root = (-half_b + sqrtd) / a;
-		if (root < rec->tmin || rec->tmax < root)
-			return (FALSE);
-	}
-	if (is_hit_cylinder(cy, ray, rec, &root) == FALSE)
-		return (FALSE);
-	rec->t = root;
+	eqtn->root = t;
+	eqtn->root_modified = TRUE;
+	rec->t = eqtn->root;
 	rec->p = ray_at(ray, rec->t);
-	rec->normal = vunit(vsub_(rec->p, cy->center));
-	rec->albedo = cy_obj->albedo;
+	rec->normal = cy->normal;
 	return (TRUE);
 }
+
