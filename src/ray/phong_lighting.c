@@ -61,10 +61,10 @@ static t_color3	point_light_get(const t_scene *scene, const t_light *light)
 
 	light_dir = vsub_(light->orig, scene->rec.p);
 	light_len = vnorm(light_dir);
-	v_tmp = vadd_(scene->rec.p, vmul(scene->rec.normal, EPSILON));
+	v_tmp = vadd_(scene->rec.p, vmul(scene->rec.normal, EPSILON));	//EPSILON을 왜 곱하는걸까요...?
 	light_ray = ray_set(&v_tmp, &light_dir);
 	if (in_shadow(scene->object, light_ray, light_len))
-		return (color3(0, 0, 0));
+		return (vadd_(color3(0, 0, 0), scene->ambient));
 	light_dir = vunit(light_dir); //교점에서 출발하여 광원을 향하는 벡터(정규화 됨)
 	// cosΘ는 Θ 값이 90도 일 때 0이고 Θ가 둔각이 되면 음수가 되므로 0.0보다 작은 경우는 0.0으로 대체한다.
 	kd = fmax(vdot(scene->rec.normal, light_dir), 0.0);// (교점에서 출발하여 광원을 향하는 벡터)와 (교점에서의 법선벡터)의 내적값.
