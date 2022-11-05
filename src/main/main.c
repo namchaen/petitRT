@@ -4,6 +4,8 @@
 #include "ray.h"
 #include "object.h"
 #include "libft.h" // atoi
+#include "utils.h"
+#include <stdlib.h>
 
 static void set_width_height(t_bool is_default, int *width, int *height, char **av);
 static void rt_data_init(t_rt_data *data, int width, int height);
@@ -21,6 +23,9 @@ int	main(int argc, char *argv[])
 	data.scene = scene_init(width, height);
 	rt_data_init(&data, width, height);
 	mlx_loop_hook(data.mlx, main_loop, &data);
+	//ft_input(#int input nb, function pointer, argument struct);
+	mlx_hook(data.mlx_win, RED_CROSS, 0, ft_exit, &data);
+	mlx_hook(data.mlx_win, KEY_PRESS, 0, ft_exit, &data);	//why seg?
 	mlx_loop(data.mlx);
 	return (0);
 }
@@ -45,6 +50,7 @@ static void rt_data_init(t_rt_data *data, int width, int height)
 
 	data->mlx = mlx_init();
 	aspect_ratio = 16.0 / 9.0;
+	data->sample_size = SAMPLE_SIZE;
 	data->width = width;
 	data->height = data->width / aspect_ratio;
 	data->mlx_win = mlx_new_window(data->mlx, data->width, data->height, "miniRT");
@@ -62,12 +68,12 @@ static void	my_mlx_pixel_put(t_img *img, int x, int y, t_color3 *color)
 	*(unsigned int*)dst = ((int)color->x << 16) | ((int)color->y << 8) | (int)color->z;
 }
 
-static int ft_draw(t_rt_data *data)
+static int	ft_draw(t_rt_data *data)
 {
 	int			i;
 	int			j;
-	t_ray		ray;
-	t_color3		color;
+	int			k;
+	t_color3	color;
 	t_scene		*scene;
 
 	scene = data->scene;
@@ -75,14 +81,20 @@ static int ft_draw(t_rt_data *data)
 	while (j >= 0)
 	{
 		i = 0;
-		ft_putstr_fd("\rScanlines remaining: ", 1);
-		ft_putnbr_fd(j, 1);
-		ft_putchar_fd(' ', 1);
 		while (i < data->width)
 		{
-			scene->ray = ray_primary(&scene->camera,
-				(float)i / (data->width - 1), (float)j / (data->height - 1));
-			color = vmul(ray_color(scene), 255.999);
+			color = vec3(0, 0, 0);
+			k = 0;
+			while (k < SAMPLE_SIZE)
+			{
+				scene->ray = ray_primary(&scene->camera, \
+					((float)i + ft_frand()) / (data->width - 1), \
+						((float)j + ft_frand()) / (data->height - 1));
+				color = vadd_(color, ray_color(scene));
+				k++;
+			}
+			color = vdiv(color, (float)SAMPLE_SIZE);
+			color = vmul(color, 255.999);
 			my_mlx_pixel_put(&data->img, i, data->height - 1 - j, &color);
 			i++;
 		}
