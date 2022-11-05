@@ -20,8 +20,9 @@ RAY_SRC := $(addprefix src/ray/, ray.c phong_lighting.c \
 			  hit_cylinder.c )
 VECTOR_SRC := $(addprefix src/vector/, length.c \
 			  op_scalar.c op_vec.c product.c vector.c)
+PARSER_SRC := $(addprefix src/parser/, line_scanf.c get_next_line.c)
 
-SRC := $(MAIN_SRC) $(SCENE_SRC) $(RAY_SRC) $(VECTOR_SRC)
+SRC := $(MAIN_SRC) $(SCENE_SRC) $(RAY_SRC) $(VECTOR_SRC) $(PARSER_SRC)
 OBJ := $(patsubst src%, obj%, $(SRC:.c=.o))
 
 obj/%.o : src/%.c
@@ -56,5 +57,6 @@ obj:
 	@mkdir -p obj/scene
 	@mkdir -p obj/ray
 	@mkdir -p obj/vector
+	@mkdir -p obj/parser
 
 re: fclean all

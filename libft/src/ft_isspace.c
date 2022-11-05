@@ -1,18 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/07 12:38:58 by chaejkim          #+#    #+#             */
-/*   Updated: 2022/11/05 22:23:42 by chaejkim         ###   ########.fr       */
+/*   Created: 2021/11/17 15:36:41 by chaejkim          #+#    #+#             */
+/*   Updated: 2022/11/03 23:11:55 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+int	ft_isspace(int c)
 {
-	return ((int)ft_strtol(str));
+	if (c == ' ' || (c >= '\t' && c <= '\r'))
+		return (1);
+	else
+		return (0);
 }
