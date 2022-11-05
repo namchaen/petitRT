@@ -12,7 +12,7 @@ LIB := -Llibft -lft -lmlx -framework OpenGL -framework AppKit
 #INC := -Iinclude -Ilibft -Imlx
 #LIB := -Llibft -lft -Lmlx -lmlx -framework OpenGL -framework AppKit
 
-MAIN_SRC := $(addprefix src/main/, main.c)
+MAIN_SRC := $(addprefix src/main/, main.c utils.c)
 SCENE_SRC := $(addprefix src/scene/, camera.c  \
 			  object_utils.c object.c scene.c)
 RAY_SRC := $(addprefix src/ray/, ray.c phong_lighting.c \

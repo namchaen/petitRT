@@ -3,10 +3,16 @@
 
 # include "vec3.h"
 # include <stdio.h> //printf
+# include <stdlib.h>
 
-# define EPSILON 1e-3 // 0.001 float
+# define EPSILON 1e-3 // 0.001 float	//error 가능성 있음
 // # define EPSILON 1e-6 // 0.000001
 # define LUMEN 3
+# define SAMPLE_SIZE 50
+# define RED_CROSS 17
+# define KEY_PRESS 2
+# define KEY_RELEASE 3
+# define ESC 53
 
 typedef t_vec3	t_point3;
 typedef t_vec3	t_color3;
@@ -128,10 +134,11 @@ typedef struct s_rt_data
 {
 	void	*mlx;
 	void	*mlx_win;
+	int		sample_size;
 	int		width;
 	int		height;
 	t_img	img;
 	t_scene	*scene;
-}						t_rt_data;
+}			t_rt_data;
 
 #endif
