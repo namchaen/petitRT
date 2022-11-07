@@ -87,7 +87,7 @@ static int	ft_draw(t_rt_data *data)
 			k = 0;
 			while (k < SAMPLE_SIZE)
 			{
-				scene->ray = ray_primary(&scene->camera, \
+				scene->ray = ray_primary(scene->camera, \
 					((float)i + ft_frand()) / (data->width - 1), \
 						((float)j + ft_frand()) / (data->height - 1));
 				color = vadd_(color, ray_color(scene));

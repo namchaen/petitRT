@@ -113,7 +113,7 @@ typedef struct s_cylinder
 
 typedef struct s_scene
 {
-	t_camera		camera;
+	t_camera		*camera;
 	t_object		*object;
 	t_object		*light;
 	t_color3		ambient;
