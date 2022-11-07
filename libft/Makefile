@@ -6,7 +6,7 @@
 #    By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/05 19:28:38 by chaejkim          #+#    #+#              #
-#    Updated: 2022/11/02 13:26:09 by chaejkim         ###   ########.fr        #
+#    Updated: 2022/11/05 22:22:45 by chaejkim         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,10 @@ CFLAGS := -Wall -Wextra -Werror -c
 INC := -I.
 
 SRC := $(addprefix src/, ft_toupper.c ft_tolower.c ft_isascii.c ft_isprint.c ft_isdigit.c \
-	  ft_isalpha.c ft_isalnum.c ft_strncmp.c ft_strlen.c ft_strlcpy.c \
+	  ft_isspace.c ft_isalpha.c ft_isalnum.c ft_strncmp.c ft_strlen.c ft_strlcpy.c \
 	  ft_memcpy.c ft_strchr.c ft_strrchr.c ft_strlcat.c ft_strnstr.c \
-	  ft_memset.c ft_bzero.c ft_memchr.c ft_memmove.c ft_memcmp.c ft_atoi.c \
+	  ft_memset.c ft_bzero.c ft_memchr.c ft_memmove.c ft_memcmp.c \
+	  ft_strtol.c ft_atoi.c ft_atof.c \
 	  ft_strdup.c ft_strndup.c ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c \
 	  ft_strcpy.c ft_strcmp.c ft_strchr.c \
 	  ft_calloc.c ft_itoa.c ft_strmapi.c ft_striteri.c ft_free_pptr.c \
