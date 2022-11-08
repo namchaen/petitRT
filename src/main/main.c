@@ -1,16 +1,20 @@
-#include <mlx.h>
-//#include "mlx.h"
-#include "scene.h"
-#include "ray.h"
-#include "object.h"
-#include "libft.h" // atoi
-#include "utils.h"
-#include <stdlib.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/08 16:28:36 by namkim            #+#    #+#             */
+/*   Updated: 2022/11/08 16:55:56 by namkim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "petitrt.h"
 
 static void set_width_height(t_bool is_default, int *width, int *height, char **av);
 static void rt_data_init(t_rt_data *data, int width, int height);
 static void	my_mlx_pixel_put(t_img *img, int x, int y, t_color3 *color);
-static int ft_draw(t_rt_data *data);
 static int main_loop(t_rt_data *data);
 
 int	main(int argc, char *argv[])
@@ -30,10 +34,13 @@ int	main(int argc, char *argv[])
 	}
 	data.scene = scene_init(argv[1]);
 	rt_data_init(&data, width, height);
-	mlx_loop_hook(data.mlx, main_loop, &data);
-	//ft_input(#int input nb, function pointer, argument struct);
-	mlx_hook(data.mlx_win, RED_CROSS, 0, ft_exit, &data);
-	mlx_hook(data.mlx_win, KEY_PRESS, 0, ft_exit, &data);	//why seg?
+	mlx_loop_hook(data.mlx, ft_draw, &data);
+	ft_draw(&data);
+	input_process_init(&data);
+	// mlx_hook(data.mlx_win, RED_CROSS, 0, ft_exit, &data);
+	// mlx_hook(data.mlx_win, KEY_PRESS, 0, process_key_input, &data);
+	// mlx_hook(data.mlx_win, MOUSE_PRESS, 0, process_mouse_input, &data);	//mouse press
+	// mlx_hook(data.mlx_win, MOUSE_RELEASE, 0, process_mouse_input, &data);
 	mlx_loop(data.mlx);
 	return (0);
 }
@@ -61,7 +68,7 @@ static void	my_mlx_pixel_put(t_img *img, int x, int y, t_color3 *color)
 	*(unsigned int*)dst = ((int)color->x << 16) | ((int)color->y << 8) | (int)color->z;
 }
 
-static int	ft_draw(t_rt_data *data)
+int	ft_draw(t_rt_data *data)
 {
 	int			i;
 	int			j;
