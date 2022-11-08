@@ -2,6 +2,7 @@
 #include "libft.h"
 
 static void	ft_error(char *msg);
+static int	check_filename(char *fname);
 static void	set_ambient_light(t_parse_info *info, int i, char *line, t_color3 *ambient);
 
 void	parser(char *fname, t_scene *scene)
@@ -11,6 +12,8 @@ void	parser(char *fname, t_scene *scene)
 	char			*line;
 	t_parse_info	info;
 
+	if (check_filename(fname) != 0)
+		ft_error("not .rt file");
 	fd = open(fname, O_RDONLY);
 	if (fd == -1)
 		ft_error("open failed");
@@ -18,11 +21,11 @@ void	parser(char *fname, t_scene *scene)
 	info.single_camera = FALSE;
 	info.single_light = FALSE;
 	i = 0;
-	printf("start parsing\n");
+	//printf("start parsing\n");
 	line = get_next_line(fd);
 	while (line)
 	{
-		printf("%d : %s\n", i, line);
+		//printf("%d : %s\n", i, line);
 		if (ft_strncmp(line, "A", 1) == 0)
 			set_ambient_light(&info, i, line, &scene->ambient);
 		else if (ft_strncmp(line, "C", 1) == 0)
@@ -43,9 +46,21 @@ void	parser(char *fname, t_scene *scene)
 	}
 	if (line)
 		free(line);
-	if (info.single_ambient == FALSE || info.single_camera == FALSE || info.single_light == FALSE)
+	if (info.single_ambient == FALSE|| !scene->camera || !scene->light)
 		ft_error("no A or C or L");
 }
+
+static int	check_filename(char *fname)
+{
+	int	len;
+
+	len = ft_strlen(fname);
+	fname += len;
+	if (*(--fname) == 't' && *(--fname) == 'r' && *(--fname) == '.')
+		return (0);
+	return (-1);
+}
+
 
 static void	ft_error(char *msg)
 {
@@ -64,6 +79,7 @@ static void	set_ambient_light(t_parse_info *info, int i, char *line, t_color3 *a
 	if (is_color_in_range(ambient) == FALSE
 		|| info->ratio <= EPSILON)
 		parse_error("out of range", i);
+	info->c = vmul(info->c, 0.00392156);
 	*ambient = vmul(info->c, info->ratio);
-	printf("A line [%02d]: %f,%f,%f\n", i, ambient->x, ambient->y, ambient->z);
+	//printf("A line [%02d]: %f,%f,%f\n", i, ambient->x, ambient->y, ambient->z);
 }

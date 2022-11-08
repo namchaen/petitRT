@@ -19,8 +19,16 @@ int	main(int argc, char *argv[])
 	int			height;
 	t_rt_data	data;
 
-	set_width_height(argc!=3, &width, &height, argv);
-	data.scene = scene_init(width, height);
+	width = 800;
+	height = 600;
+	if (argc != 2)
+	{
+		//ft_error("./miniRT <filename.rt>");
+		ft_putstr_fd("Error\n", 1);
+		ft_putendl_fd("./miniRT <filename.rt>", 1);
+		exit(1);
+	}
+	data.scene = scene_init(argv[1]);
 	rt_data_init(&data, width, height);
 	mlx_loop_hook(data.mlx, main_loop, &data);
 	//ft_input(#int input nb, function pointer, argument struct);
@@ -29,21 +37,6 @@ int	main(int argc, char *argv[])
 	mlx_loop(data.mlx);
 	return (0);
 }
-
-static void set_width_height(t_bool is_default, int *width, int *height, char **av)
-{
-	if (!is_default)
-	{
-		*width = ft_atoi(av[1]);
-		*height = ft_atoi(av[2]);
-	}
-	if (is_default || !*width || !*height)
-	{
-		*width = 400;
-		*height = 300;
-	}
-}
-
 static void rt_data_init(t_rt_data *data, int width, int height)
 {
 	float		aspect_ratio;

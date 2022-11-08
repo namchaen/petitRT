@@ -1,4 +1,4 @@
-NAME = buildupRT
+NAME = miniRT
 
 CC := cc
 FLAGS := -Wall -Werror -Wextra -g -fsanitizer=address
