@@ -1,18 +1,19 @@
 NAME = buildupRT
 
 CC := cc
-FLAGS := -Wall -Werror -Wextra -g -fsanitizer=address
+FLAGS := -Wall -Werror -Wextra #-g -fsanitizer=address
 
 LFT := libft/libft.a
-MLX := mlx/libmlx.a
+#MLX := mlx/libmlx.a
+#MLX := mlx/
 
-INC := -Iinclude -Ilibft
-LIB := -Llibft -lft -lmlx -framework OpenGL -framework AppKit
+INC := -Iinclude -Ilibft -Imlx
+LIB := -Llibft -lft -Lmlx -lmlx -framework OpenGL -framework AppKit
 
 #INC := -Iinclude -Ilibft -Imlx
 #LIB := -Llibft -lft -Lmlx -lmlx -framework OpenGL -framework AppKit
 
-MAIN_SRC := $(addprefix src/main/, main.c utils.c)
+MAIN_SRC := $(addprefix src/main/, main.c utils.c input.c)
 SCENE_SRC := $(addprefix src/scene/, camera.c  \
 			  object_utils.c object.c scene.c)
 RAY_SRC := $(addprefix src/ray/, ray.c phong_lighting.c \
@@ -38,7 +39,7 @@ $(NAME) : $(OBJ)
 $(LFT):
 	@$(MAKE) -s -C libft
 $(MLX):
-	@$(MAKE) -s -C mlx
+	$(MAKE) -C mlx
 
 clean:
 #	@$(MAKE) -s -C libft $@

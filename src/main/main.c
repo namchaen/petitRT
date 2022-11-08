@@ -1,72 +1,21 @@
-#include <mlx.h>
-//#include "mlx.h"
-#include "scene.h"
-#include "ray.h"
-#include "object.h"
-#include "libft.h" // atoi
-#include "utils.h"
-#include <stdlib.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/08 16:28:36 by namkim            #+#    #+#             */
+/*   Updated: 2022/11/08 16:55:56 by namkim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "petitrt.h"
 
 static void set_width_height(t_bool is_default, int *width, int *height, char **av);
 static void rt_data_init(t_rt_data *data, int width, int height);
 static void	my_mlx_pixel_put(t_img *img, int x, int y, t_color3 *color);
-static int ft_draw(t_rt_data *data);
 static int main_loop(t_rt_data *data);
-
-int	process_mouse_input(int mousecode, t_rt_data *data)
-{
-	t_camera	camera;
-
-	write(1, "a\n", 2);
-	write(1, "b\n", 2);
-	//camera = data->scene->camera;
-	write(1, "c\n", 2);
-	printf("mousecode : %d\n", mousecode);
-	if (mousecode == 1)
-		printf("camera.x: %f\n", data->scene->camera.orig.x);
-	// if (mousecode == MOUSE_UP)
-	// 	camera->dir = vunit(vadd_(camera->dir, vec3(0, 0, -0.1)));
-	// else if (mousecode == MOUSE_DOWN)
-	// 	camera->dir = vunit(vadd_(camera->dir, vec3(0, 0, 0.1)));
-	// ft_draw(data);
-	return (0);
-}
-
-int	process_key_input(int keycode, t_rt_data *data)
-{
-	t_camera	*cam;
-
-	cam = &(data->scene->camera);
-	if (keycode == ESC)
-		ft_exit(data);
-	else if (keycode == 126)	// 위
-	{
-		cam->dir = vunit(vadd_(data->scene->camera.dir, vec3(0, 0.2, 0)));
-		camera_init(cam, cam->fov, cam->orig, cam->dir);
-		ft_draw(data);
-	}
-	else if (keycode == 125)	//아래
-	{
-		data->scene->camera.dir	= vunit(vadd_(data->scene->camera.dir, vec3(0, -0.2, 0)));
-		camera_init(cam, cam->fov, cam->orig, cam->dir);
-		ft_draw(data);
-	}
-	else if (keycode == 123)	// <-
-	{
-		data->scene->camera.dir	= vunit(vadd_(data->scene->camera.dir, vec3(-0.2, 0, 0)));
-		camera_init(cam, cam->fov, cam->orig, cam->dir);
-		ft_draw(data);
-	}
-	else if (keycode == 124)	// ->
-	{
-		data->scene->camera.dir	= vunit(vadd_(data->scene->camera.dir, vec3(0.2, 0, 0)));
-		camera_init(cam, cam->fov, cam->orig, cam->dir);
-		ft_draw(data);
-	}
-	else
-		printf("keycode : %d\n", keycode);
-	return (0);
-}
 
 int	main(int argc, char *argv[])
 {
@@ -78,11 +27,12 @@ int	main(int argc, char *argv[])
 	data.scene = scene_init(width, height);
 	rt_data_init(&data, width, height);
 	mlx_loop_hook(data.mlx, ft_draw, &data);
-	//ft_input(#int input nb, function pointer, argument struct);
-//	ft_draw(&data);
-	mlx_hook(data.mlx_win, RED_CROSS, 0, ft_exit, &data);
-	mlx_hook(data.mlx_win, KEY_PRESS, 0, process_key_input, &data);	//why seg?
-//	mlx_mouse_hook(data.mlx_win, process_mouse_input, &data);
+	ft_draw(&data);
+	input_process_init(&data);
+	// mlx_hook(data.mlx_win, RED_CROSS, 0, ft_exit, &data);
+	// mlx_hook(data.mlx_win, KEY_PRESS, 0, process_key_input, &data);
+	// mlx_hook(data.mlx_win, MOUSE_PRESS, 0, process_mouse_input, &data);	//mouse press
+	// mlx_hook(data.mlx_win, MOUSE_RELEASE, 0, process_mouse_input, &data);
 	mlx_loop(data.mlx);
 	return (0);
 }
@@ -125,7 +75,7 @@ static void	my_mlx_pixel_put(t_img *img, int x, int y, t_color3 *color)
 	*(unsigned int*)dst = ((int)color->x << 16) | ((int)color->y << 8) | (int)color->z;
 }
 
-static int	ft_draw(t_rt_data *data)
+int	ft_draw(t_rt_data *data)
 {
 	int			i;
 	int			j;
