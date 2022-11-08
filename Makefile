@@ -1,4 +1,4 @@
-NAME = buildupRT
+NAME = miniRT
 
 CC := cc
 FLAGS := -Wall -Werror -Wextra -g -fsanitizer=address
@@ -14,14 +14,18 @@ LIB := -Llibft -lft -lmlx -framework OpenGL -framework AppKit
 
 MAIN_SRC := $(addprefix src/main/, main.c utils.c)
 SCENE_SRC := $(addprefix src/scene/, camera.c  \
-			  object_utils.c object.c scene.c)
+			  object_utils.c object.c scene.c \
+			  object_new.c)
 RAY_SRC := $(addprefix src/ray/, ray.c phong_lighting.c \
 			  hit_plane.c hit_record.c hit_sphere.c hit.c \
 			  hit_cylinder.c )
 VECTOR_SRC := $(addprefix src/vector/, length.c \
 			  op_scalar.c op_vec.c product.c vector.c)
+PARSER_SRC := $(addprefix src/parser/, line_scanf.c get_next_line.c \
+			  add_object.c add_object_shape.c \
+			  parser.c parser_utils.c)
 
-SRC := $(MAIN_SRC) $(SCENE_SRC) $(RAY_SRC) $(VECTOR_SRC)
+SRC := $(MAIN_SRC) $(SCENE_SRC) $(RAY_SRC) $(VECTOR_SRC) $(PARSER_SRC)
 OBJ := $(patsubst src%, obj%, $(SRC:.c=.o))
 
 obj/%.o : src/%.c
@@ -56,5 +60,6 @@ obj:
 	@mkdir -p obj/scene
 	@mkdir -p obj/ray
 	@mkdir -p obj/vector
+	@mkdir -p obj/parser
 
 re: fclean all
