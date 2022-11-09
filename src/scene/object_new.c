@@ -1,4 +1,5 @@
 #include "object.h"
+#include "ray.h"
 #include <stdlib.h>
 #include <math.h>
 
@@ -12,7 +13,12 @@ t_object	*object_new(t_object_type type, void *element, t_color3 *albedo)
 	new->element = element;
 	new->next = NULL;
 	new->albedo = *albedo;
-	//new->object_handler = 
+	if (type == SP)
+		new->hit = hit_sphere;
+	else if (type == PL)
+		new->hit = hit_plane;
+	else if (type == CY)
+		new->hit = hit_cylinder;
 	return (new);
 }
 

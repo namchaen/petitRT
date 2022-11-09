@@ -5,31 +5,26 @@ t_bool	hit_sphere(t_object *sp_obj, t_ray *ray, t_hit_record *rec)
 {
 	t_sphere	*sp;
 	t_vec3		oc;
-	float		a;
-	float		half_b;
-	float		c;
-	float		discriminant;
-	float		sqrtd;
-	float		root;
+	t_eqtn		eq;
 
 	sp = sp_obj->element;
 	oc = vsub_(ray->orig, sp->center);
-	a = vnorm2(ray->dir);
-	half_b = vdot(oc, ray->dir);
-	c = vnorm2(oc) - sp->radius2;
-	discriminant = half_b * half_b - a * c;
-	if (discriminant < 0)
+	eq.a = vnorm2(ray->dir);
+	eq.half_b = vdot(oc, ray->dir);
+	eq.c = vnorm2(oc) - sp->radius2;
+	eq.discriminant = eq.half_b * eq.half_b - eq.a * eq.c;
+	if (eq.discriminant < 0)
 		return (FALSE);
-	sqrtd = sqrt(discriminant);
-	root = (-half_b - sqrtd) / a;
-	if (root < rec->tmin || rec->tmax < root)
+	eq.sqrtd = sqrt(eq.discriminant);
+	eq.root = (-eq.half_b - eq.sqrtd) / eq.a;
+	if (eq.root < rec->tmin || rec->tmax < eq.root)
 	{
-		root = (-half_b + sqrtd) / a;
-		if (root < rec->tmin || rec->tmax < root)
+		eq.root = (-eq.half_b + eq.sqrtd) / eq.a;
+		if (eq.root < rec->tmin || rec->tmax < eq.root)
 			return (FALSE);
 	}
-	rec->t = root;
-	rec->p = ray_at(ray, root);
+	rec->t = eq.root;
+	rec->p = ray_at(ray, eq.root);
 	rec->normal = vdiv(vsub_(rec->p, sp->center), sp->radius);
 	rec->albedo = sp_obj->albedo;
 	record_set_face_normal(ray, rec);

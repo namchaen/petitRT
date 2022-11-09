@@ -36,14 +36,13 @@ typedef enum e_object_type
 typedef struct s_camera
 {
 	t_point3	orig;
-	t_point3	dir;
+	t_vec3		dir[3];
 	float		fov;
 	t_point3	lower_left_corner;
 	t_vec3		horizontal;
 	t_vec3		vertical;
 	float		viewport_h;
 	float		viewport_w;
-	t_bool		r[3];
 	//float		focal_length;
 	//floatvertical		time[2]; // shutter open, close times
 	//struct t_camera	*next;
@@ -84,7 +83,7 @@ typedef struct s_object
 	void			*element;
 	void			*next;
 	t_color3		albedo;
-	void			(*object_handler)(void *element);
+	t_bool			(*hit)(struct s_object *, t_ray *, t_hit_record *);
 }				t_object;
 
 typedef struct s_sphere

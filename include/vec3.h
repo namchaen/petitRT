@@ -37,6 +37,13 @@ float	vnorm2(t_vec3 v);
 float	vnorm(t_vec3 v);
 t_vec3	vunit(t_vec3 v);
 
+/* Quaternion rotation*/
+t_vec3	vqut_mul(float theta, t_vec3 v1, t_vec3 v2);
+/* Euler rotation */
+t_vec3	vroll(t_vec3 v1, float alpha);
+t_vec3	vpitch(t_vec3 v1, float alpha);
+t_vec3	vyaw(t_vec3 v1, float alpha);
+t_vec3	vrotate(t_vec3 v1, float a, float b, float r);
 
 /* 벡터곱 연산 결과
 	행벡터 곱하기 열벡터 -> 스칼라

@@ -21,7 +21,8 @@ RAY_SRC := $(addprefix src/ray/, ray.c phong_lighting.c \
 			  hit_plane.c hit_record.c hit_sphere.c hit.c \
 			  hit_cylinder.c )
 VECTOR_SRC := $(addprefix src/vector/, length.c \
-			  op_scalar.c op_vec.c product.c vector.c)
+			  op_scalar.c op_vec.c product.c vector.c \
+			  rotate.c)
 PARSER_SRC := $(addprefix src/parser/, line_scanf.c get_next_line.c \
 			  add_object.c add_object_shape.c \
 			  parser.c parser_utils.c)

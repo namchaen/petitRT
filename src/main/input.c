@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 16:24:58 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/09 16:12:09 by namkim           ###   ########.fr       */
+/*   Updated: 2022/11/09 23:52:45 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "scene.h"
 #include "util.h"
 #include <mlx.h>
+#include <math.h>
 
 /*
 object 종류 : camera, light, sphere, plain, cylinder
@@ -37,7 +38,7 @@ int	process_mouse_input(int mousecode, int x, int y, t_rt_data *data)
 		cam->fov += 3;
 	if (mousecode == 5)
 		cam->fov -= 3;
-	camera_init(cam, cam->fov, cam->orig, cam->dir);
+	camera_init(cam, cam->fov, cam->orig, *cam->dir);
 	do_render(data);
 	return (0);
 }
@@ -45,54 +46,35 @@ int	process_mouse_input(int mousecode, int x, int y, t_rt_data *data)
 int	process_key_input(int keycode, t_rt_data *data)
 {
 	t_camera	*cam;
+	t_vec3		tmp;
+	float		theta;
 
+	theta = 30 * M_PI / 180;
 	cam = data->scene->camera;
 	if (keycode == ESC)
 		ft_exit(data);
 	else if (keycode == KEY_UP)
 	{
-		if (cam->r[1])
-		{
-			cam->dir.y += 0.4;
-			cam->dir = vunit(cam->dir);
-			if (cam->dir.y >= 0.97)
-				cam->r[1] = TRUE;
-		}
-		else
-		{
-			cam->dir.y -= 0.4;
-			cam->dir = vunit(cam->dir);
-			if (cam->dir.y >= -0.97)
-				cam->r[1] = FALSE;
-		}
-		vprnt("camdir : ", &cam->dir);
+		tmp = vqut_mul(theta, vmul(cam->dir[1], sin(theta)), *cam->dir);
+		*cam->dir = vqut_mul(-theta, tmp, vmul(cam->dir[1], sin(-theta)));
 	}
 	else if (keycode == KEY_DOWN)
 	{
-		if (cam->r[1])
-		{
-			cam->dir.y -= 0.4;
-			cam->dir = vunit(cam->dir);
-			if (cam->dir.y < -0.97)
-				cam->r[1] = FALSE;
-		}
-		else
-		{
-			cam->dir.y += 0.4;
-			cam->dir = vunit(cam->dir);
-			if (cam->dir.y > 0.97)
-				cam->r[1] = TRUE;
-		}
+		tmp = vqut_mul(-theta, vmul(cam->dir[1], sin(-theta)), *cam->dir);
+		*cam->dir = vqut_mul(theta, tmp, vmul(cam->dir[1], sin(theta)));
 	}
 	else if (keycode == KEY_LEFT)
 	{
-		cam->dir.x -= 0.2;
+		tmp = vqut_mul(theta, vmul(cam->dir[2], sin(theta)), *cam->dir);
+		*cam->dir = vunit(vqut_mul(-theta, vunit(tmp), vmul(cam->dir[2], sin(-theta))));
 	}
 	else if (keycode == KEY_RIGHT)
 	{
-		cam->dir.x += 0.2;
+		tmp = vqut_mul(-theta, vmul(cam->dir[2], sin(-theta)), *cam->dir);
+		*cam->dir = vunit(vqut_mul(theta, vunit(tmp), vmul(cam->dir[2], sin(theta))));
 	}
-	camera_init(cam, cam->fov, cam->orig, cam->dir);
+	camera_init(cam, cam->fov, cam->orig, *cam->dir);
+	vprnt("camdir : ", &*cam->dir);
 	do_render(data);
 	return (0);
 }

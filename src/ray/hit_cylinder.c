@@ -16,16 +16,6 @@ t_bool	hit_cylinder(t_object *cy_obj, t_ray *ray, t_hit_record *rec)
 		return (FALSE);
 	if (is_hit_cylinder(cy, ray, rec, &eqtn) == FALSE)
 		return (FALSE);
-	//rec->t = eqtn.root;
-	//rec->p = ray_at(ray, rec->t);
-	//if (eqtn.root_modified == FALSE)
-	//	// height = vdot(vsub_(ray_at(ray, rec->t), cy->center_base), cy->normal)
-	//	rec->normal = vunit(vsub_(rec->p, vadd_(cy->center_base, vmul(cy->normal, height))));
-	//else
-	//{
-	//	rec->normal = cy->normal;  // base_cap
-	//	rec->normal = vmul(cy->normal, -1); // base_cap
-	//}
 	rec->albedo = cy_obj->albedo;
 	return (TRUE);
 }
