@@ -43,6 +43,7 @@ typedef struct s_camera
 	t_vec3		vertical;
 	float		viewport_h;
 	float		viewport_w;
+	t_bool		r[3];
 	//float		focal_length;
 	//floatvertical		time[2]; // shutter open, close times
 	//struct t_camera	*next;
@@ -132,13 +133,14 @@ typedef struct s_img
 
 typedef struct s_rt_data
 {
-	void	*mlx;
-	void	*mlx_win;
-	int		sample_size;
-	int		width;
-	int		height;
-	t_img	img;
-	t_scene	*scene;
+	void		*mlx;
+	void		*mlx_win;
+	int			sample_size;
+	int			width;
+	int			height;
+	t_img		img;
+	t_scene		*scene;
+	t_object	*this;
 }			t_rt_data;
 
 typedef struct s_eqtn

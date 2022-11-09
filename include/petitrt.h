@@ -6,7 +6,7 @@
 /*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 16:30:57 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/08 16:55:01 by namkim           ###   ########.fr       */
+/*   Updated: 2022/11/09 16:09:01 by namkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@
 # include "utils.h"
 # include <stdlib.h>
 
-int	ft_draw(t_rt_data *data);
+int	do_render(t_rt_data *data);
 
 #endif

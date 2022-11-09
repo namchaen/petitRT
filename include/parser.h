@@ -6,6 +6,8 @@
 # include "struct.h"
 # include <stdlib.h>
 
+# define RGV_NORMAL "A %f %f,%f,%f"
+
 # define LSCANF_A "A %f %f,%f,%f"
 # define LSCANF_C "C %f,%f,%f %f,%f,%f %f"
 # define LSCANF_L "L %f,%f,%f %f %f,%f,%f"
