@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 16:28:36 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/09 16:15:50 by namkim           ###   ########.fr       */
+/*   Updated: 2022/11/10 14:13:59 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	main(int argc, char *argv[])
 	}
 	data.scene = scene_init(argv[1]);
 	rt_data_init(&data, width, height);
-	mlx_loop_hook(data.mlx, do_render, &data);
+	do_render(&data);
+	//mlx_loop_hook(data.mlx, do_render, &data);
 	input_process_init(&data);
 	mlx_loop(data.mlx);
 	return (0);

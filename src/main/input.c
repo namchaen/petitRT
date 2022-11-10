@@ -6,7 +6,7 @@
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 16:24:58 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/09 23:52:45 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/10 21:52:34 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,47 +48,69 @@ int	process_key_input(int keycode, t_rt_data *data)
 	t_camera	*cam;
 	t_vec3		tmp;
 	float		theta;
+	t_quat		quat1;
 
 	// theta = 30 * M_PI / 180;
-	// theta = 0.21;
 	// theta = M_PI * 0.5;
-	// theta = 0.2;
-	theta = 0.6;
+	theta = 0.2;
 	cam = data->scene->camera;
 	if (keycode == ESC)
 		ft_exit(data);
 	else if (keycode == KEY_UP)
 	{
-		// if (cam->dir[1].x < 0)
-		// {
-		// 	// tmp = cam->dir[2];
-		// 	// cam->dir[2] = tmp;
-		// 	// cam->dir[1] = tmp;
-		// 	*cam->dir = vunit(vqut_rotate(theta, vmul(cam->dir[1], -1), *cam->dir));
-		// }
-		// else
-		// 	*cam->dir = vunit(vqut_rotate(theta, cam->dir[1], *cam->dir));
-		*cam->dir = vunit(vqut_rotate(theta, cam->dir[1], *cam->dir));
-		// tmp = vqut_mul(theta, vmul(cam->dir[1], sin(theta)), *cam->dir);
-		// *cam->dir = vunit(vmul_qut(-theta, tmp, vmul(cam->dir[1], sin(-theta))));
+		/* 방법 1*/
+		*cam->dir = vunit(vquat_rotate(theta, cam->dir[1], *cam->dir));
+
+		/* 방법 2*/
+		//tmp = vquat_mul(theta, vmul(cam->dir[1], sin(theta)), *cam->dir);
+		//*cam->dir = vunit(vmul_qut(theta, tmp, vmul(cam->dir[1], -sin(theta))));
+		
+		/* 방법 3*/
+		//quat1 = vquat_mul_(vquat(theta, vmul(cam->dir[1], sin(theta))), vquat(0, cam->dir[0]));
+		//quat1 = vquat_mul_(quat1, vquat(theta, vmul(cam->dir[1], -sin(theta))));
+		//*cam->dir = quat1.v;
 	}
 	else if (keycode == KEY_DOWN)
 	{
-		*cam->dir = vunit(vqut_rotate(-theta, cam->dir[1], *cam->dir));
-		// tmp = vqut_mul(-theta, vmul(cam->dir[1], sin(-theta)), *cam->dir);
-		// *cam->dir = vunit(vmul_qut(theta, tmp, vmul(cam->dir[1], sin(theta))));
+		/* 방법 1*/
+		*cam->dir = vunit(vquat_rotate(-theta, cam->dir[1], *cam->dir));
+
+		/* 방법 2*/
+		//tmp = vquat_mul(-theta, vmul(cam->dir[1], sin(-theta)), *cam->dir);
+		//*cam->dir = vunit(vmul_qut(-theta, tmp, vmul(cam->dir[1], -sin(-theta))));
+
+		/* 방법 3*/
+		//quat1 = vquat_mul_(vquat(-theta, vmul(cam->dir[1], sin(-theta))), vquat(0, cam->dir[0]));
+		//quat1 = vquat_mul_(quat1, vquat(-theta, vmul(cam->dir[1], -sin(-theta))));
+		//*cam->dir = quat1.v;
 	}
 	else if (keycode == KEY_LEFT)
 	{
-		*cam->dir = vunit(vqut_rotate(theta, cam->dir[2], *cam->dir));
-		// tmp = vqut_mul(theta, vmul(cam->dir[2], sin(theta)), *cam->dir);
-		// *cam->dir = vunit(vmul_qut(-theta, tmp, vmul(cam->dir[2], sin(-theta))));
+		/* 방법 1*/
+		*cam->dir = vunit(vquat_rotate(theta, cam->dir[2], *cam->dir));
+
+		/* 방법 2*/
+		//tmp = vquat_mul(theta, vmul(cam->dir[2], sin(theta)), *cam->dir);
+		//*cam->dir = vunit(vmul_qut(theta, tmp, vmul(cam->dir[2], -sin(theta))));
+
+		/* 방법 3*/
+		//quat1 = vquat_mul_(vquat(theta, vmul(cam->dir[2], sin(theta))), vquat(0, cam->dir[0]));
+		//quat1 = vquat_mul_(quat1, vquat(theta, vmul(cam->dir[2], -sin(theta))));
+		//*cam->dir = quat1.v;
 	}
 	else if (keycode == KEY_RIGHT)
 	{
-		*cam->dir = vunit(vqut_rotate(-theta, cam->dir[2], *cam->dir));
-		// tmp = vqut_mul(-theta, vmul(cam->dir[2], sin(-theta)), *cam->dir);
-		// *cam->dir = vunit(vmul_qut(theta, tmp, vmul(cam->dir[2], sin(theta))));
+		/* 방법 1*/
+		*cam->dir = vunit(vquat_rotate(-theta, cam->dir[2], *cam->dir));
+		
+		/* 방법 2*/
+		//tmp = vquat_mul(-theta, vmul(cam->dir[2], sin(-theta)), *cam->dir);
+		//*cam->dir = vunit(vmul_qut(-theta, tmp, vmul(cam->dir[2], -sin(-theta))));
+		
+		/* 방법 3*/
+		//quat1 = vquat_mul_(vquat(-theta, vmul(cam->dir[2], sin(-theta))), vquat(0, cam->dir[0]));
+		//quat1 = vquat_mul_(quat1, vquat(-theta, vmul(cam->dir[2], -sin(-theta))));
+		//*cam->dir = quat1.v;
 	}
 	camera_init(cam, cam->fov, cam->orig, *cam->dir);
 	vprnt("cam->dir[0]", &cam->dir[0]);

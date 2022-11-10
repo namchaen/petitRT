@@ -10,6 +10,13 @@ typedef struct s_vec3
 	float	z;
 }				t_vec3;
 
+typedef struct s_quat
+{
+	float	a;
+	t_vec3	v;
+}			t_quat;
+
+
 typedef t_vec3 t_point3;
 typedef t_vec3 t_color3;
 
@@ -38,9 +45,14 @@ float	vnorm(t_vec3 v);
 t_vec3	vunit(t_vec3 v);
 
 /* Quaternion rotation*/
-t_vec3	vqut_rotate(float theta, t_vec3 n, t_vec3 v1);
-t_vec3	vqut_mul(float theta, t_vec3 v1, t_vec3 v2);
+t_quat	vquat(float theta, t_vec3 v);
+/* 방법 1*/
+t_vec3	vquat_rotate(float theta, t_vec3 n, t_vec3 v1);
+/* 방법 2*/
+t_vec3	vquat_mul(float theta, t_vec3 v1, t_vec3 v2);
 t_vec3	vmul_qut(float theta, t_vec3 v1, t_vec3 v2);
+/* 방법 3*/
+t_quat	vquat_mul_(t_quat q1, t_quat q2);
 /* Euler rotation */
 t_vec3	vroll(t_vec3 v1, float alpha);
 t_vec3	vpitch(t_vec3 v1, float alpha);
