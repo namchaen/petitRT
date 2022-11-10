@@ -29,11 +29,15 @@ t_camera	*camera_new(const t_point3 orig, const t_vec3 dir, float fov)
 	cam->dir[0] = vunit(dir);
 	w = vunit(vmul(*cam->dir, -1));
 	if (fabs(vnorm(vcross(vec3(0, 1, 0), w))) <= EPSILON)
-		cam->dir[1] = vunit(vcross(vec3(1, 0, 0), w));
+	{
+		cam->dir[2] = vunit(vcross(vec3(1, 0, 0), w));
+		cam->dir[1] = vunit(vcross(w, cam->dir[2]));
+	}
 	else
+	{
 		cam->dir[1] = vunit(vcross(vec3(0, 1, 0), w));
-	// cam->dir[1] = vunit(vcross(vec3(0, 1, 0), w));
-	cam->dir[2] = vunit(vcross(w, cam->dir[1]));
+		cam->dir[2] = vunit(vcross(w, cam->dir[1]));
+	}
 	cam->orig = orig;
 	cam->fov = fov;
 	cam->viewport_h = 2.0 * tan(fov * M_PI / (180.0 * 2));

@@ -38,7 +38,9 @@ float	vnorm(t_vec3 v);
 t_vec3	vunit(t_vec3 v);
 
 /* Quaternion rotation*/
+t_vec3	vqut_rotate(float theta, t_vec3 n, t_vec3 v1);
 t_vec3	vqut_mul(float theta, t_vec3 v1, t_vec3 v2);
+t_vec3	vmul_qut(float theta, t_vec3 v1, t_vec3 v2);
 /* Euler rotation */
 t_vec3	vroll(t_vec3 v1, float alpha);
 t_vec3	vpitch(t_vec3 v1, float alpha);

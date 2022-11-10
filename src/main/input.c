@@ -49,32 +49,52 @@ int	process_key_input(int keycode, t_rt_data *data)
 	t_vec3		tmp;
 	float		theta;
 
-	theta = 30 * M_PI / 180;
+	// theta = 30 * M_PI / 180;
+	// theta = 0.21;
+	// theta = M_PI * 0.5;
+	// theta = 0.2;
+	theta = 0.6;
 	cam = data->scene->camera;
 	if (keycode == ESC)
 		ft_exit(data);
 	else if (keycode == KEY_UP)
 	{
-		tmp = vqut_mul(theta, vmul(cam->dir[1], sin(theta)), *cam->dir);
-		*cam->dir = vqut_mul(-theta, tmp, vmul(cam->dir[1], sin(-theta)));
+		// if (cam->dir[1].x < 0)
+		// {
+		// 	// tmp = cam->dir[2];
+		// 	// cam->dir[2] = tmp;
+		// 	// cam->dir[1] = tmp;
+		// 	*cam->dir = vunit(vqut_rotate(theta, vmul(cam->dir[1], -1), *cam->dir));
+		// }
+		// else
+		// 	*cam->dir = vunit(vqut_rotate(theta, cam->dir[1], *cam->dir));
+		*cam->dir = vunit(vqut_rotate(theta, cam->dir[1], *cam->dir));
+		// tmp = vqut_mul(theta, vmul(cam->dir[1], sin(theta)), *cam->dir);
+		// *cam->dir = vunit(vmul_qut(-theta, tmp, vmul(cam->dir[1], sin(-theta))));
 	}
 	else if (keycode == KEY_DOWN)
 	{
-		tmp = vqut_mul(-theta, vmul(cam->dir[1], sin(-theta)), *cam->dir);
-		*cam->dir = vqut_mul(theta, tmp, vmul(cam->dir[1], sin(theta)));
+		*cam->dir = vunit(vqut_rotate(-theta, cam->dir[1], *cam->dir));
+		// tmp = vqut_mul(-theta, vmul(cam->dir[1], sin(-theta)), *cam->dir);
+		// *cam->dir = vunit(vmul_qut(theta, tmp, vmul(cam->dir[1], sin(theta))));
 	}
 	else if (keycode == KEY_LEFT)
 	{
-		tmp = vqut_mul(theta, vmul(cam->dir[2], sin(theta)), *cam->dir);
-		*cam->dir = vunit(vqut_mul(-theta, vunit(tmp), vmul(cam->dir[2], sin(-theta))));
+		*cam->dir = vunit(vqut_rotate(theta, cam->dir[2], *cam->dir));
+		// tmp = vqut_mul(theta, vmul(cam->dir[2], sin(theta)), *cam->dir);
+		// *cam->dir = vunit(vmul_qut(-theta, tmp, vmul(cam->dir[2], sin(-theta))));
 	}
 	else if (keycode == KEY_RIGHT)
 	{
-		tmp = vqut_mul(-theta, vmul(cam->dir[2], sin(-theta)), *cam->dir);
-		*cam->dir = vunit(vqut_mul(theta, vunit(tmp), vmul(cam->dir[2], sin(theta))));
+		*cam->dir = vunit(vqut_rotate(-theta, cam->dir[2], *cam->dir));
+		// tmp = vqut_mul(-theta, vmul(cam->dir[2], sin(-theta)), *cam->dir);
+		// *cam->dir = vunit(vmul_qut(theta, tmp, vmul(cam->dir[2], sin(theta))));
 	}
 	camera_init(cam, cam->fov, cam->orig, *cam->dir);
-	vprnt("camdir : ", &*cam->dir);
+	vprnt("cam->dir[0]", &cam->dir[0]);
+	vprnt("cam->dir[1]", &cam->dir[1]);
+	vprnt("cam->dir[2]", &cam->dir[2]);
+	vprnt("camdir", &*cam->dir);
 	do_render(data);
 	return (0);
 }

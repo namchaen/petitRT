@@ -2,13 +2,44 @@
 #include <stdlib.h>
 #include <math.h>
 
+t_vec3	vqut_rotate(float theta, t_vec3 n, t_vec3 v1)
+{
+	t_vec3	v;
+
+	v = vadd_(vmul(v1, cos(theta)), vmul(vcross(n, v1), sin(theta)));
+	// v.x = cos(theta) * v2.x + v1.x + v1.y * v2.z - v1.z * v2.y;
+	// v.y = cos(theta) * v2.y - v1.x * v2.z + v1.y + v1.z * v2.x;
+	// v.z = cos(theta) * v2.z + v1.x * v2.y - v1.y * v2.x + v1.z;
+	return (v);
+}
+
+// t_vec3	vqut_mul(float theta, t_vec3 v1, t_vec3 v2)
+// {
+// 	t_vec3	v;
+
+// 	v.x = cos(theta) * v2.x + v1.x * cos(theta) + v1.y * v2.z - v1.z * v2.y;
+// 	v.y = cos(theta) * v2.y - v1.x * v2.z + v1.y * cos(theta) + v1.z * v2.x;
+// 	v.z = cos(theta) * v2.z + v1.x * v2.y - v1.y * v2.x + v1.z * cos(theta);
+// 	return (v);
+// }
+
 t_vec3	vqut_mul(float theta, t_vec3 v1, t_vec3 v2)
 {
 	t_vec3	v;
 
-	v.x = cos(theta) * v2.x + v1.x * cos(theta) + v1.y * v2.z - v1.z * v2.y;
-	v.y = cos(theta) * v2.y - v1.x * v2.z + v1.y * cos(theta) + v1.z * v2.x;
-	v.z = cos(theta) * v2.z + v1.x * v2.y - v1.y * v2.x + v1.z * cos(theta);
+	v.x = cos(theta) * v2.x + v1.x + v1.y * v2.z - v1.z * v2.y;
+	v.y = cos(theta) * v2.y - v1.x * v2.z + v1.y + v1.z * v2.x;
+	v.z = cos(theta) * v2.z + v1.x * v2.y - v1.y * v2.x + v1.z;
+	return (v);
+}
+
+t_vec3	vmul_qut(float theta, t_vec3 v1, t_vec3 v2)
+{
+	t_vec3	v;
+
+	v.x = v2.x + v1.x * cos(theta) + v1.y * v2.z - v1.z * v2.y;
+	v.y = v2.y - v1.x * v2.z + v1.y * cos(theta) + v1.z * v2.x;
+	v.z = v2.z + v1.x * v2.y - v1.y * v2.x + v1.z * cos(theta);
 	return (v);
 }
 
