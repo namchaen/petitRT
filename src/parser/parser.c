@@ -21,11 +21,9 @@ void	parser(char *fname, t_scene *scene)
 	info.single_camera = FALSE;
 	info.single_light = FALSE;
 	i = 0;
-	//printf("start parsing\n");
 	line = get_next_line(fd);
 	while (line)
 	{
-		//printf("%d : %s\n", i, line);
 		if (ft_strncmp(line, "A", 1) == 0)
 			set_ambient_light(&info, i, line, &scene->ambient);
 		else if (ft_strncmp(line, "C", 1) == 0)
@@ -38,7 +36,7 @@ void	parser(char *fname, t_scene *scene)
 			add_sphere(&info, i, line, &scene->object);
 		else if (ft_strncmp(line, "cy", 2) == 0)
 			add_cylinder(&info, i, line, &scene->object);
-		else if (*line != '\n')
+		else if (*line != '\n' && *line != '#')
 			parse_error("invalid identifier", i);
 		free(line);
 		line = get_next_line(fd);
@@ -76,10 +74,9 @@ static void	set_ambient_light(t_parse_info *info, int i, char *line, t_color3 *a
 	info->single_ambient = TRUE;
 	if (line_scanf(i, line, LSCANF_A, &info->ratio, &info->c.x, &info->c.y, &info->c.z) != 4)
 		parse_error("unmatched number", i);
-	if (is_color_in_range(ambient) == FALSE
+	if (is_color_in_range(&info->c) == FALSE
 		|| info->ratio <= EPSILON)
 		parse_error("out of range", i);
 	info->c = vmul(info->c, 0.00392156);
 	*ambient = vmul(info->c, info->ratio);
-	//printf("A line [%02d]: %f,%f,%f\n", i, ambient->x, ambient->y, ambient->z);
 }

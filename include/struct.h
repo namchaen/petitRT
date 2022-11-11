@@ -8,7 +8,7 @@
 # define EPSILON 1e-3 // 0.001 float	//error 가능성 있음
 // # define EPSILON 1e-6 // 0.000001
 # define LUMEN 3
-# define SAMPLE_SIZE 4
+# define SAMPLE_SIZE 1
 # define RED_CROSS 17
 # define KEY_PRESS 2
 # define KEY_RELEASE 3

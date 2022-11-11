@@ -6,7 +6,7 @@
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 16:24:58 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/09 23:52:45 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/11 16:24:40 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	process_mouse_input(int mousecode, int x, int y, t_rt_data *data)
 		cam->fov += 3;
 	if (mousecode == 5)
 		cam->fov -= 3;
-	camera_init(cam, cam->fov, cam->orig, *cam->dir);
+	camera_set(cam, cam->fov, cam->orig);
 	do_render(data);
 	return (0);
 }
@@ -46,35 +46,33 @@ int	process_mouse_input(int mousecode, int x, int y, t_rt_data *data)
 int	process_key_input(int keycode, t_rt_data *data)
 {
 	t_camera	*cam;
-	t_vec3		tmp;
 	float		theta;
 
-	theta = 30 * M_PI / 180;
+	theta = 0.2;
 	cam = data->scene->camera;
 	if (keycode == ESC)
 		ft_exit(data);
 	else if (keycode == KEY_UP)
 	{
-		tmp = vqut_mul(theta, vmul(cam->dir[1], sin(theta)), *cam->dir);
-		*cam->dir = vqut_mul(-theta, tmp, vmul(cam->dir[1], sin(-theta)));
+		cam->dir[0] = vunit(vrotate(theta, cam->dir[1], cam->dir[0]));
+		cam->dir[2] = vunit(vrotate(theta, cam->dir[1], cam->dir[2]));
 	}
 	else if (keycode == KEY_DOWN)
 	{
-		tmp = vqut_mul(-theta, vmul(cam->dir[1], sin(-theta)), *cam->dir);
-		*cam->dir = vqut_mul(theta, tmp, vmul(cam->dir[1], sin(theta)));
+		cam->dir[0] = vunit(vrotate(-theta, cam->dir[1], cam->dir[0]));
+		cam->dir[2] = vunit(vrotate(-theta, cam->dir[1], cam->dir[2]));
 	}
 	else if (keycode == KEY_LEFT)
 	{
-		tmp = vqut_mul(theta, vmul(cam->dir[2], sin(theta)), *cam->dir);
-		*cam->dir = vunit(vqut_mul(-theta, vunit(tmp), vmul(cam->dir[2], sin(-theta))));
+		cam->dir[0] = vunit(vrotate(theta, cam->dir[2], cam->dir[0]));
+		cam->dir[1] = vunit(vrotate(theta, cam->dir[2], cam->dir[1]));
 	}
 	else if (keycode == KEY_RIGHT)
 	{
-		tmp = vqut_mul(-theta, vmul(cam->dir[2], sin(-theta)), *cam->dir);
-		*cam->dir = vunit(vqut_mul(theta, vunit(tmp), vmul(cam->dir[2], sin(theta))));
+		cam->dir[0] = vunit(vrotate(-theta, cam->dir[2], cam->dir[0]));
+		cam->dir[1] = vunit(vrotate(-theta, cam->dir[2], cam->dir[1]));
 	}
-	camera_init(cam, cam->fov, cam->orig, *cam->dir);
-	vprnt("camdir : ", &*cam->dir);
+	camera_set(cam, cam->fov, cam->orig);
 	do_render(data);
 	return (0);
 }
