@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   line_scanf.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/11 17:10:04 by chaejkim          #+#    #+#             */
+/*   Updated: 2022/11/11 17:14:42 by chaejkim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 #include "libft.h"
 #include <stdarg.h>
@@ -5,7 +17,6 @@
 static int	lscanf(int i, char *line, const char *fmt, va_list *arg_ptr);
 static int	do_scan(char **line, const char fmt, va_list *arg_ptr);
 static int	scan_f(char **line, float *f);
-static int	scan_obj_type(char **line, int *type);
 
 int	line_scanf(int i, char *line, const char *fmt, ...)
 {

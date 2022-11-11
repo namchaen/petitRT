@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keymap.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 16:22:20 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/08 17:05:43 by namkim           ###   ########.fr       */
+/*   Updated: 2022/11/11 20:16:59 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # define KEY_A					0
 # define KEY_S					1
 # define KEY_D					2
+# define KEY_Z					6
+# define KEY_X					7
 # define KEY_UP					126
 # define KEY_DOWN				125
 # define KEY_LEFT				123

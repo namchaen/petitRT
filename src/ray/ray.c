@@ -1,14 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ray.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/11 17:16:00 by chaejkim          #+#    #+#             */
+/*   Updated: 2022/11/11 20:10:29 by chaejkim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ray.h"
-#include <math.h>
 
 t_ray	ray_primary(const t_camera *cam, float u, float v)
 {
 	t_ray	ray;
 
 	ray.orig = cam->orig;
-	ray.dir = vunit(vsub_(vadd_(vadd_(cam->lower_left_corner, vmul(cam->horizontal, u)), vmul(cam->vertical, v)), cam->orig));
+	ray.dir = vunit(vsub_(vadd_(vadd_(cam->lower_left_corner,
+						vmul(cam->horizontal, u)),
+					vmul(cam->vertical, v)), cam->orig));
 	return (ray);
-
 }
 
 t_ray	ray_set(const t_point3 *origin, const t_vec3 *dir)
@@ -16,7 +28,7 @@ t_ray	ray_set(const t_point3 *origin, const t_vec3 *dir)
 	t_ray	ray;
 
 	ray.orig = *origin;
-	ray.dir = vunit(*dir); // 안전빵 나중에 속도 리뷰
+	ray.dir = vunit(*dir);
 	return (ray);
 }
 
@@ -38,5 +50,6 @@ t_color3	ray_color(t_scene *scene)
 	if (hit(scene->object, &scene->ray, &scene->rec))
 		return (phong_lighting(scene));
 	t = 0.5 * (scene->ray.dir.y + 1.0);
-	return (vadd_(vmul(color3(1.0, 1.0, 1.0), 1.0 - t), vmul(color3(0.5, 0.7, 1.0), t)));
+	return (vadd_(vmul(color3(1.0, 1.0, 1.0), 1.0 - t),
+			vmul(color3(0.5, 0.7, 1.0), t)));
 }

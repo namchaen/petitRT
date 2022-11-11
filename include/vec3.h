@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vec3.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/11 16:41:55 by namkim            #+#    #+#             */
+/*   Updated: 2022/11/11 16:46:11 by chaejkim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef VEC3_H
 # define VEC3_H
 
-# include <stdio.h> //printf
+# include <stdio.h>
 
 typedef struct s_vec3
 {
@@ -10,8 +22,8 @@ typedef struct s_vec3
 	float	z;
 }				t_vec3;
 
-typedef t_vec3 t_point3;
-typedef t_vec3 t_color3;
+typedef t_vec3	t_point3;
+typedef t_vec3	t_color3;
 
 t_vec3	vec3(float x, float y, float z);
 t_vec3	point3(float x, float y, float z);

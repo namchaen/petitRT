@@ -1,12 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   struct.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/11 16:55:53 by namkim            #+#    #+#             */
+/*   Updated: 2022/11/11 17:08:35 by chaejkim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef STRUCT_H
 # define STRUCT_H
 
 # include "vec3.h"
-# include <stdio.h> //printf
+# include <stdio.h>
 # include <stdlib.h>
 
-# define EPSILON 1e-3 // 0.001 float	//error 가능성 있음
-// # define EPSILON 1e-6 // 0.000001
+# define EPSILON 1e-3
 # define LUMEN 3
 # define SAMPLE_SIZE 1
 # define RED_CROSS 17
@@ -43,10 +54,6 @@ typedef struct s_camera
 	t_vec3		vertical;
 	float		viewport_h;
 	float		viewport_w;
-	//float		focal_length;
-	//floatvertical		time[2]; // shutter open, close times
-	//struct t_camera	*next;
-	//struct t_camera	*prev;
 }				t_camera;
 
 typedef struct s_light
@@ -65,16 +72,13 @@ typedef struct s_ray
 
 typedef struct s_hit_record
 {
-	t_point3	p; // 교점의 좌표
-	t_vec3		normal; // 교점에서의 법선
-	float		t; // 광선의 원점과 교점 사이의 거리
-	//float		u;
-	//float		v;
+	t_point3	p;
+	t_vec3		normal;
+	float		t;
 	float		tmin;
 	float		tmax;
 	t_bool		front_face;
-	t_color3	albedo;  // 반사율
-	//void		*mat_ptr;
+	t_color3	albedo;
 }			t_hit_record;
 
 typedef struct s_object
@@ -83,7 +87,7 @@ typedef struct s_object
 	void			*element;
 	void			*next;
 	t_color3		albedo;
-	t_bool			(*hit)(struct s_object *, t_ray *, t_hit_record *);
+	enum e_bool		(*hit)(struct s_object *, t_ray *, t_hit_record *);
 }				t_object;
 
 typedef struct s_sphere

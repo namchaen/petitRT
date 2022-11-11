@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   object.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/11 17:14:56 by namkim            #+#    #+#             */
+/*   Updated: 2022/11/11 17:17:42 by chaejkim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "object.h"
 #include <stdlib.h>
 
@@ -5,21 +17,23 @@ t_object	*create_object(t_object_type type, void *element, t_color3 albedo)
 {
 	t_object	*new;
 
-	if (!(new = (t_object *)malloc(sizeof(t_object))))
+	new = (t_object *)malloc(sizeof(t_object));
+	if (!new)
 		return (NULL);
 	new->type = type;
 	new->element = element;
 	new->next = NULL;
 	new->albedo = albedo;
-	//new->object_handler = 
 	return (new);
 }
 
-t_light	*create_light(t_point3 light_origin, t_color3 light_color, float bright_ratio)
+t_light	*create_light(t_point3 light_origin, \
+					t_color3 light_color, float bright_ratio)
 {
 	t_light	*light;
 
-	if(!(light = (t_light *)malloc(sizeof(t_light))))
+	light = (t_light *)malloc(sizeof(t_light));
+	if (!light)
 		return (NULL);
 	light->orig = light_origin;
 	light->light_color = light_color;
@@ -29,9 +43,10 @@ t_light	*create_light(t_point3 light_origin, t_color3 light_color, float bright_
 
 t_sphere	*create_sphere(t_point3 center, float radius)
 {
-	t_sphere *sp;
+	t_sphere	*sp;
 
-	if(!(sp = (t_sphere *)malloc(sizeof(t_sphere))))
+	sp = (t_sphere *)malloc(sizeof(t_sphere));
+	if (!sp)
 		return (NULL);
 	sp->center = center;
 	sp->radius = radius;
@@ -51,7 +66,8 @@ t_plane	*create_plane(t_point3 point, t_vec3 normal)
 	return (pl);
 }
 
-t_cylinder	*create_cylinder(t_point3 point, t_vec3 normal, float diameter, float height)
+t_cylinder	*create_cylinder(t_point3 point, \
+						t_vec3 normal, float diameter, float height)
 {
 	t_cylinder	*cy;
 
@@ -59,8 +75,6 @@ t_cylinder	*create_cylinder(t_point3 point, t_vec3 normal, float diameter, float
 	if (!cy)
 		return (NULL);
 	cy->center_base = point;
-	//cy->normal = normal;
-	//cy->h = vmul(normal, height);
 	cy->normal = vdiv(normal, vnorm(normal));
 	cy->h = vmul(cy->normal, height);
 	cy->center = vadd_(point, vdiv(cy->h, 2.0));

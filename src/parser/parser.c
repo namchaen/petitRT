@@ -1,9 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/11 17:10:09 by chaejkim          #+#    #+#             */
+/*   Updated: 2022/11/11 20:10:29 by chaejkim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 #include "libft.h"
+#include "utils.h"
 
-static void	ft_error(char *msg);
-static int	check_filename(char *fname);
-static void	set_ambient_light(t_parse_info *info, int i, char *line, t_color3 *ambient);
+static int	open_file(char *fname);
+static void	info_init(t_parse_info *info);
+static void	set_ambient_light(t_parse_info *info,
+				int i, char *line, t_scene *scene);
+static void	*set_add_obj(char *line);
 
 void	parser(char *fname, t_scene *scene)
 {
@@ -11,72 +26,79 @@ void	parser(char *fname, t_scene *scene)
 	int				i;
 	char			*line;
 	t_parse_info	info;
+	t_add_obj		add_obj;
 
-	if (check_filename(fname) != 0)
-		ft_error("not .rt file");
-	fd = open(fname, O_RDONLY);
-	if (fd == -1)
-		ft_error("open failed");
-	info.single_ambient = FALSE;
-	info.single_camera = FALSE;
-	info.single_light = FALSE;
+	fd = open_file(fname);
+	info_init(&info);
 	i = 0;
 	line = get_next_line(fd);
 	while (line)
 	{
-		if (ft_strncmp(line, "A", 1) == 0)
-			set_ambient_light(&info, i, line, &scene->ambient);
-		else if (ft_strncmp(line, "C", 1) == 0)
-			add_camera(&info, i, line, &scene->camera);
-		else if (ft_strncmp(line, "L", 1) == 0)
-			add_light(&info, i, line, &scene->light);
-		else if (ft_strncmp(line, "pl", 2) == 0)
-			add_plane(&info, i, line, &scene->object);
-		else if (ft_strncmp(line, "sp", 2) == 0)
-			add_sphere(&info, i, line, &scene->object);
-		else if (ft_strncmp(line, "cy", 2) == 0)
-			add_cylinder(&info, i, line, &scene->object);
-		else if (*line != '\n' && *line != '#')
+		add_obj = set_add_obj(line);
+		if (add_obj)
+			add_obj(&info, i, line, scene);
+		else if (*line != '\n' && *(line + 1) != '#')
 			parse_error("invalid identifier", i);
 		free(line);
 		line = get_next_line(fd);
 		i++;
 	}
-	if (line)
-		free(line);
-	if (info.single_ambient == FALSE|| !scene->camera || !scene->light)
+	if (info.single_ambient == FALSE || !scene->camera || !scene->light)
 		ft_error("no A or C or L");
 }
 
-static int	check_filename(char *fname)
+static int	open_file(char *fname)
 {
-	int	len;
+	int		fd;
+	int		len;
+	char	*tmp;
 
 	len = ft_strlen(fname);
-	fname += len;
-	if (*(--fname) == 't' && *(--fname) == 'r' && *(--fname) == '.')
-		return (0);
-	return (-1);
+	tmp = fname + len;
+	if (!(*(--tmp) == 't' && *(--tmp) == 'r' && *(--tmp) == '.'))
+		ft_error("not .rt file");
+	fd = open(fname, O_RDONLY);
+	if (fd == -1)
+		ft_error("open failed");
+	return (fd);
 }
 
-
-static void	ft_error(char *msg)
+static void	info_init(t_parse_info *info)
 {
-	ft_putstr_fd("Error\n", 1);
-	ft_putendl_fd(msg, 1);
-	exit(1);
+	info->single_ambient = FALSE;
+	info->single_camera = FALSE;
+	info->single_light = FALSE;
 }
 
-static void	set_ambient_light(t_parse_info *info, int i, char *line, t_color3 *ambient)
+static void	*set_add_obj(char *line)
+{
+	if (*line == 'A')
+		return (set_ambient_light);
+	else if (*line == 'C')
+		return (add_camera);
+	else if (*line == 'L')
+		return (add_light);
+	else if (*line == 'p' && *(line + 1) == 'l')
+		return (add_plane);
+	else if (*line == 's' && *(line + 1) == 'p')
+		return (add_sphere);
+	else if (*line == 'c' && *(line + 1) == 'y')
+		return (add_cylinder);
+	return (NULL);
+}
+
+static void	set_ambient_light(t_parse_info *info,
+				int i, char *line, t_scene *scene)
 {
 	if (info->single_ambient != FALSE)
 		parse_error("redefinition of ambient lighting", i);
 	info->single_ambient = TRUE;
-	if (line_scanf(i, line, LSCANF_A, &info->ratio, &info->c.x, &info->c.y, &info->c.z) != 4)
+	if (line_scanf(i, line, LSCANF_A,
+			&info->ratio, &info->c.x, &info->c.y, &info->c.z) != 4)
 		parse_error("unmatched number", i);
 	if (is_color_in_range(&info->c) == FALSE
 		|| info->ratio <= EPSILON)
 		parse_error("out of range", i);
-	info->c = vmul(info->c, 0.00392156);
-	*ambient = vmul(info->c, info->ratio);
+	info->c = vmul(info->c, RGB_NORMAL);
+	scene->ambient = vmul(info->c, info->ratio);
 }

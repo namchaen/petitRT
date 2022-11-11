@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/11 17:10:06 by chaejkim          #+#    #+#             */
+/*   Updated: 2022/11/11 17:14:34 by chaejkim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 #include "libft.h"
 
@@ -15,7 +27,8 @@ t_bool	is_vec_in_range(t_vec3 *v, int min, int max)
 {
 	if (v->x < min || v->x > max
 		|| v->y < min || v->y > max
-		|| v->z < min || v->z > max)
+		|| v->z < min || v->z > max
+		|| vnorm(*v) <= EPSILON)
 		return (FALSE);
 	return (TRUE);
 }

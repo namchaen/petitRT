@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/05 16:02:00 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/05 17:10:53 by namkim           ###   ########.fr       */
+/*   Updated: 2022/11/11 18:05:43 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "petitrt.h"
 #include <stdlib.h>
 
 float	ft_frand(void)
@@ -21,6 +21,6 @@ float	ft_frand(void)
 int	ft_exit(t_rt_data *data)
 {
 	mlx_destroy_window(data->mlx, data->mlx_win);
-	printf("=== the end ===\n"); //
+	printf("=== the end ===\n");
 	exit(0);
 }

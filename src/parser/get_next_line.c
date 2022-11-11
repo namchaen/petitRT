@@ -6,7 +6,7 @@
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 08:51:46 by chaejkim          #+#    #+#             */
-/*   Updated: 2022/11/05 22:30:47 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/11 17:06:40 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ char	*get_next_line(int fd)
 {
 	static char	*save;
 	char		*line;
-	int			len;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
@@ -89,9 +88,7 @@ static char	*get_line(char *save)
 
 static char	*save_line(char *save, int start_len)
 {
-	char	*rval;
 	char	*s;
-	int		c;
 
 	if (!*(save + start_len))
 	{

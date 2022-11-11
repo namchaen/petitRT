@@ -1,7 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ray.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/11 16:47:56 by namkim            #+#    #+#             */
+/*   Updated: 2022/11/11 18:25:13 by chaejkim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef RAY_H
 # define RAY_H
 
 # include "struct.h"
+# include <math.h>
+# define KSN 64 // shininess value
+# define KS 0.7 // specular strength
 
 t_ray		ray_primary(const t_camera *cam, float t1, float t2);
 t_ray		ray_set(const t_point3 *origin, const t_vec3 *dir);
@@ -9,6 +24,9 @@ t_point3	ray_at(const t_ray *ray, float t);
 t_color3	ray_color(t_scene *scene);
 
 t_color3	phong_lighting(const t_scene *scene);
+
+t_bool		is_in_shadow(const t_scene *scene, \
+				const t_light *light, t_vec3 light_dir);
 
 void		record_init(t_hit_record *rec);
 void		record_set_face_normal(t_ray *r, t_hit_record *rec);

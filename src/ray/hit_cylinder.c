@@ -1,15 +1,30 @@
-#include "ray.h"
-#include <math.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hit_cylinder.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/11 17:19:35 by chaejkim          #+#    #+#             */
+/*   Updated: 2022/11/11 18:28:02 by chaejkim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-static t_bool	set_eqaution(t_eqtn *eqtn, t_cylinder *cy, t_ray *ray, t_hit_record *rec);
-static t_bool	is_hit_cylinder(t_cylinder *cy, t_ray *ray, t_hit_record *rec, t_eqtn *eqtn);
-static t_bool	check_base_cap(t_cylinder *cy, t_ray *ray, t_hit_record *rec, t_eqtn *eqtn);
-static t_bool	check_top_cap(t_cylinder *cy, t_ray *ray, t_hit_record *rec, t_eqtn *eqtn);
+#include "ray.h"
+
+static t_bool	set_eqaution(t_eqtn *eqtn, t_cylinder *cy,
+					t_ray *ray, t_hit_record *rec);
+static t_bool	is_hit_cylinder(t_cylinder *cy, t_ray *ray,
+					t_hit_record *rec, t_eqtn *eqtn);
+static t_bool	check_base_cap(t_cylinder *cy, t_ray *ray,
+					t_hit_record *rec, t_eqtn *eqtn);
+static t_bool	check_top_cap(t_cylinder *cy, t_ray *ray,
+					t_hit_record *rec, t_eqtn *eqtn);
 
 t_bool	hit_cylinder(t_object *cy_obj, t_ray *ray, t_hit_record *rec)
 {
-	t_cylinder			*cy;
-	t_eqtn	eqtn;
+	t_cylinder	*cy;
+	t_eqtn		eqtn;
 
 	cy = cy_obj->element;
 	if (set_eqaution(&eqtn, cy, ray, rec) == FALSE)
@@ -20,7 +35,8 @@ t_bool	hit_cylinder(t_object *cy_obj, t_ray *ray, t_hit_record *rec)
 	return (TRUE);
 }
 
-static t_bool	set_eqaution(t_eqtn *eqtn, t_cylinder *cy, t_ray *ray, t_hit_record *rec)
+static t_bool	set_eqaution(t_eqtn *eqtn, t_cylinder *cy,
+					t_ray *ray, t_hit_record *rec)
 {
 	t_vec3	oc;
 	t_vec3	v;
@@ -49,7 +65,8 @@ static t_bool	set_eqaution(t_eqtn *eqtn, t_cylinder *cy, t_ray *ray, t_hit_recor
 	return (TRUE);
 }
 
-static t_bool	is_hit_cylinder(t_cylinder *cy, t_ray *ray, t_hit_record *rec, t_eqtn *eqtn)
+static t_bool	is_hit_cylinder(t_cylinder *cy, t_ray *ray,
+					t_hit_record *rec, t_eqtn *eqtn)
 {
 	t_point3	p;
 	t_vec3		pc;
@@ -64,11 +81,13 @@ static t_bool	is_hit_cylinder(t_cylinder *cy, t_ray *ray, t_hit_record *rec, t_e
 		return (check_top_cap(cy, ray, rec, eqtn));
 	rec->t = eqtn->root;
 	rec->p = p;
-	rec->normal = vunit(vsub_(rec->p, vadd_(cy->center_base, vmul(cy->normal, height))));
+	rec->normal = vunit(vsub_(rec->p,
+				vadd_(cy->center_base, vmul(cy->normal, height))));
 	return (TRUE);
 }
 
-static t_bool	check_base_cap(t_cylinder *cy, t_ray *ray, t_hit_record *rec, t_eqtn *eqtn)
+static t_bool	check_base_cap(t_cylinder *cy, t_ray *ray,
+					t_hit_record *rec, t_eqtn *eqtn)
 {
 	float	dn;
 	float	t;
@@ -91,7 +110,8 @@ static t_bool	check_base_cap(t_cylinder *cy, t_ray *ray, t_hit_record *rec, t_eq
 	return (TRUE);
 }
 
-static t_bool	check_top_cap(t_cylinder *cy, t_ray *ray, t_hit_record *rec, t_eqtn *eqtn)
+static t_bool	check_top_cap(t_cylinder *cy, t_ray *ray,
+					t_hit_record *rec, t_eqtn *eqtn)
 {
 	float	dn;
 	float	t;
@@ -113,4 +133,3 @@ static t_bool	check_top_cap(t_cylinder *cy, t_ray *ray, t_hit_record *rec, t_eqt
 	rec->normal = cy->normal;
 	return (TRUE);
 }
-

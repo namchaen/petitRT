@@ -6,7 +6,7 @@
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 12:38:58 by chaejkim          #+#    #+#             */
-/*   Updated: 2022/11/03 23:43:49 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/11 16:59:39 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static float	set_d(const char *str)
 	{
 		rval = rval * 10 + (*str - '0');
 		str++;
-		digit *= 0.1; 
+		digit *= 0.1;
 	}
 	rval *= digit;
 	return (rval);

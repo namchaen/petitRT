@@ -17,7 +17,7 @@ MAIN_SRC := $(addprefix src/main/, main.c utils.c input.c render.c)
 SCENE_SRC := $(addprefix src/scene/, camera.c  \
 			  object_utils.c object.c scene.c \
 			  object_new.c)
-RAY_SRC := $(addprefix src/ray/, ray.c phong_lighting.c \
+RAY_SRC := $(addprefix src/ray/, ray.c phong_lighting.c phong_lighting2.c\
 			  hit_plane.c hit_record.c hit_sphere.c hit.c \
 			  hit_cylinder.c )
 VECTOR_SRC := $(addprefix src/vector/, length.c \
@@ -26,20 +26,21 @@ VECTOR_SRC := $(addprefix src/vector/, length.c \
 PARSER_SRC := $(addprefix src/parser/, line_scanf.c get_next_line.c \
 			  add_object.c add_object_shape.c \
 			  parser.c parser_utils.c)
+UTILS_SRC := $(addprefix src/utils/, utils.c)
 
-SRC := $(MAIN_SRC) $(SCENE_SRC) $(RAY_SRC) $(VECTOR_SRC) $(PARSER_SRC)
+SRC := $(MAIN_SRC) $(SCENE_SRC) $(RAY_SRC) $(VECTOR_SRC) $(PARSER_SRC) $(UTILS_SRC)
 OBJ := $(patsubst src%, obj%, $(SRC:.c=.o))
 
 obj/%.o : src/%.c
-	$(CC) $(INC) -o $@ -c $<
-#	$(CC) $(FLAGS) $(INC) -o $@ -c $<
+#	$(CC) $(INC) -o $@ -c $<
+	$(CC) $(FLAGS) $(INC) -o $@ -c $<
 
 all: $(LFT) obj $(NAME)
 #all: $(LFT) $(MLX) obj $(NAME)
 
 $(NAME) : $(OBJ)
-	$(CC) -o $@ $^ $(LIB)
-#	$(CC) $(FLAGS) -o $@ $^ $(LIB)
+#	$(CC) -o $@ $^ $(LIB)
+	$(CC) $(FLAGS) -o $@ $^ $(LIB)
 
 $(LFT):
 	@$(MAKE) -s -C libft
@@ -63,5 +64,6 @@ obj:
 	@mkdir -p obj/ray
 	@mkdir -p obj/vector
 	@mkdir -p obj/parser
+	@mkdir -p obj/utils
 
 re: fclean all
