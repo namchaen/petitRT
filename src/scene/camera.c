@@ -6,7 +6,7 @@
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 17:11:12 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/11 20:27:33 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/11 20:39:23 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,4 @@ void	rotate_camera(int keycode, t_camera *cam)
 	}
 	*target = vunit(vrotate(theta, *axis, *target));
 	*target2 = vunit(vrotate(theta, *axis, *target2));
-}
-
-void	move_camera(float *axis, float distance)
-{
-	*axis += distance;
 }

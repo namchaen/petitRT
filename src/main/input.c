@@ -6,7 +6,7 @@
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 16:24:58 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/11 20:26:16 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/11 20:40:34 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,17 @@ int	process_key_input(int keycode, t_rt_data *data)
 	else if (keycode <= KEY_UP && keycode >= KEY_LEFT)
 		rotate_camera(keycode, cam);
 	else if (keycode == KEY_W)
-		move_camera(&cam->orig.y, 1);
+		cam->orig.y += 1;
 	else if (keycode == KEY_A)
-		move_camera(&cam->orig.x, -1);
+		cam->orig.x -= 1;
 	else if (keycode == KEY_S)
-		move_camera(&cam->orig.y, -1);
+		cam->orig.y -= 1;
 	else if (keycode == KEY_D)
-		move_camera(&cam->orig.x, 1);
+		cam->orig.x += 1;
 	else if (keycode == KEY_Z)
-		move_camera(&cam->orig.z, -1);
+		cam->orig.z -= 1;
 	else if (keycode == KEY_X)
-		move_camera(&cam->orig.z, 1);
+		cam->orig.z += 1;
 	camera_set(cam, cam->fov, cam->orig);
 	do_render(data);
 	return (0);

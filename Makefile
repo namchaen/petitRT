@@ -14,10 +14,9 @@ LIB := -Llibft -lft -Lmlx -lmlx -framework OpenGL -framework AppKit
 #LIB := -Llibft -lft -Lmlx -lmlx -framework OpenGL -framework AppKit
 
 MAIN_SRC := $(addprefix src/main/, main.c utils.c input.c render.c)
-SCENE_SRC := $(addprefix src/scene/, camera.c  \
-			  object_utils.c object.c scene.c \
-			  object_new.c)
-RAY_SRC := $(addprefix src/ray/, ray.c phong_lighting.c phong_lighting2.c\
+SCENE_SRC := $(addprefix src/scene/, camera.c \
+			  object_utils.c object.c scene.c)
+RAY_SRC := $(addprefix src/ray/, ray.c phong_lighting.c shadow.c\
 			  hit_plane.c hit_record.c hit_sphere.c hit.c \
 			  hit_cylinder.c )
 VECTOR_SRC := $(addprefix src/vector/, length.c \
