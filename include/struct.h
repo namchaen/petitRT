@@ -6,7 +6,7 @@
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:55:53 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/11 17:08:35 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/13 06:58:15 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,12 @@ typedef struct s_img
 	int		endian;
 }					t_img;
 
+typedef struct s_mouse
+{
+	t_bool		press;
+	t_point3	pos;
+}				t_mouse;
+
 typedef struct s_rt_data
 {
 	void		*mlx;
@@ -143,6 +149,7 @@ typedef struct s_rt_data
 	int			height;
 	t_img		img;
 	t_scene		*scene;
+	t_mouse		left_mouse;
 	t_object	*this;
 }			t_rt_data;
 

@@ -13,9 +13,11 @@ LIB := -Llibft -lft -Lmlx -lmlx -framework OpenGL -framework AppKit
 #INC := -Iinclude -Ilibft -Imlx
 #LIB := -Llibft -lft -Lmlx -lmlx -framework OpenGL -framework AppKit
 
-MAIN_SRC := $(addprefix src/main/, main.c utils.c input.c render.c)
+MAIN_SRC := $(addprefix src/main/, main.c utils.c input.c render.c \
+			  choose_object.c)
 SCENE_SRC := $(addprefix src/scene/, camera.c \
-			  object_utils.c object.c scene.c)
+			  object_utils.c object.c scene.c \
+			  move_object.c rotate_object.c)
 RAY_SRC := $(addprefix src/ray/, ray.c phong_lighting.c shadow.c\
 			  hit_plane.c hit_record.c hit_sphere.c hit.c \
 			  hit_cylinder.c )
