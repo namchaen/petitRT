@@ -6,7 +6,7 @@
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 17:09:55 by chaejkim          #+#    #+#             */
-/*   Updated: 2022/11/11 19:50:11 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/15 05:07:09 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	add_sphere(t_parse_info *info, int i, char *line, t_scene *scene)
 			&info->diameter, &info->c.x, &info->c.y, &info->c.z) != 7)
 		parse_error("unmatched number", i);
 	if (is_color_in_range(&info->c) == FALSE
-		|| info->diameter / 2.0 <= EPSILON)
+		|| info->diameter / 2.0 <= 0)
 		parse_error("out of range", i);
 	sp = sphere_new(&info->p, info->diameter / 2.0);
 	info->c = vmul(info->c, RGB_NORMAL);
@@ -55,8 +55,8 @@ void	add_cylinder(t_parse_info *info, int i, char *line, t_scene *scene)
 		parse_error("unmatched number", i);
 	if (is_color_in_range(&info->c) == FALSE
 		|| is_vec_in_range(&info->n, -1, 1) == FALSE
-		|| info->diameter / 2.0 <= EPSILON
-		|| info->height <= EPSILON)
+		|| info->diameter / 2.0 <= 0
+		|| info->height <= 0)
 		parse_error("out of range", i);
 	cy = cylinder_new(&info->p, &info->n, info->diameter / 2.0, info->height);
 	info->c = vmul(info->c, RGB_NORMAL);

@@ -6,7 +6,7 @@
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 17:10:04 by chaejkim          #+#    #+#             */
-/*   Updated: 2022/11/14 15:25:43 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/15 03:40:15 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,10 @@ static int	lscanf(int i, char *line, const char *fmt, va_list *arg_ptr)
 	scan_cnt = 0;
 	while (*fmt && *line)
 	{
-		skip_isspace(&fmt, &line);
+		if (ft_isspace(*fmt))
+			skip_isspace(&fmt, &line);
 		while (*fmt != '%' && *fmt && *line && *fmt++ != *line++)
-			parse_error("unmatched char", i);
+			parse_error("unmatched char near ,", i);
 		if (*fmt == '%')
 		{
 			if (*fmt)
@@ -51,7 +52,7 @@ static int	lscanf(int i, char *line, const char *fmt, va_list *arg_ptr)
 	}
 	skip_isspace(&fmt, &line);
 	if (*fmt || *line)
-		parse_error("unmatched char", i);
+		parse_error("unmatched char near newline", i);
 	return (scan_cnt);
 }
 
@@ -80,13 +81,13 @@ static int	scan_f(char **line, float *f)
 	*f = ft_atof(*line);
 	if (**line == '+' || **line == '-')
 		(*line)++;
+	if (**line < '0' || **line > '9')
+		return (1);
 	while (**line >= '0' && **line <= '9')
 		(*line)++;
 	if (**line == '.')
 		(*line)++;
 	while (**line >= '0' && **line <= '9')
 		(*line)++;
-	if (*f == 0 && (**line == '0' || (**line == '+' && *(*line + 1) == '0')))
-		return (1);
 	return (0);
 }

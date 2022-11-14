@@ -6,7 +6,7 @@
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 17:10:00 by chaejkim          #+#    #+#             */
-/*   Updated: 2022/11/14 09:34:23 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/15 05:06:31 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,7 @@ void	add_multi_light(t_parse_info *info, int i, char *line, t_scene *scene)
 {
 	t_light	*light;
 
-	if (info->single_light == FALSE && scene->light == NULL)
-		info->single_light = TRUE;
-	else if (info->single_light != TRUE)
+	if (info->single_light == TRUE)
 		parse_error("single light", i);
 	if (line_scanf(i, line, LSCANF_MULTI_L, &info->p.x, &info->p.y, &info->p.z
 			, &info->ratio, &info->c.x, &info->c.y, &info->c.z) != 7)

@@ -6,7 +6,7 @@
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 17:10:09 by chaejkim          #+#    #+#             */
-/*   Updated: 2022/11/14 09:26:50 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/15 05:06:00 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	parser(char *fname, t_scene *scene)
 
 	fd = open_file(fname);
 	info_init(&info);
-	i = 0;
+	i = 1;
 	line = get_next_line(fd);
 	while (line)
 	{
