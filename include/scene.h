@@ -6,7 +6,7 @@
 /*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:41:13 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/14 15:53:39 by namkim           ###   ########.fr       */
+/*   Updated: 2022/11/14 16:42:52 by namkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "struct.h"
 # define THETA 0.21
 # define ASPECT_RATIO 0.562500
+# define ASPECT_RATIO_2 1.777
 
 t_scene		*scene_init(char *fname);
 t_camera	*camera_new(const t_point3 orig, const t_vec3 dir, float fov);

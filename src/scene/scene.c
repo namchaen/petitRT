@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 17:18:31 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/14 15:28:46 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/14 16:44:50 by namkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,7 @@ t_camera	*camera_new(const t_point3 orig, const t_vec3 dir, float fov)
 {
 	t_camera	*cam;
 	t_vec3		w;
-	float		aspect_ratio;
 
-	aspect_ratio = 16.0 / 9.0;
 	cam = (t_camera *)malloc(sizeof(t_camera));
 	if (!cam)
 		return (NULL);
@@ -59,8 +57,8 @@ t_camera	*camera_new(const t_point3 orig, const t_vec3 dir, float fov)
 	camera_dir_set(cam, w);
 	cam->orig = orig;
 	cam->fov = fov;
-	cam->viewport_h = 2.0 * tan(fov * M_PI / (180.0 * 2));
-	cam->viewport_w = cam->viewport_h * aspect_ratio;
+	cam->viewport_w = 2.0 * tan(fov * M_PI / (180 * 2));
+	cam->viewport_h = cam->viewport_w * ASPECT_RATIO;
 	cam->horizontal = vmul(cam->dir[1], cam->viewport_w);
 	cam->vertical = vmul(cam->dir[2], cam->viewport_h);
 	cam->left_bottom = vsub_(cam->orig,

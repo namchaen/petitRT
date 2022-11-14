@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   petitrt.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 16:30:57 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/13 06:29:07 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/14 16:54:43 by namkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <stdlib.h>
 
 # define WIDTH 800
+# define SENSTV 300
 
 /* main/utils.c */
 float		ft_frand(void);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 16:28:36 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/13 06:31:46 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/14 16:27:54 by namkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,10 @@ int	main(int argc, char *argv[])
 
 static void	rt_data_init(t_rt_data *data, int width)
 {
-	float		aspect_ratio;
-
 	data->mlx = mlx_init();
-	aspect_ratio = 16.0 / 9.0;
 	data->sample_size = SAMPLE_SIZE;
 	data->width = width;
-	data->height = data->width / aspect_ratio;
+	data->height = data->width * ASPECT_RATIO;
 	data->mlx_win = mlx_new_window(data->mlx,
 			data->width, data->height, "miniRT");
 	data->img.ptr = mlx_new_image(data->mlx, data->width, data->height);

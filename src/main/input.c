@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 16:24:58 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/13 06:56:48 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/14 16:54:52 by namkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,8 @@ static int	mouse_motion_input(int x, int y, t_rt_data *data)
 	{
 		move = vsub_(point3(x, y, 0), data->left_mouse.pos);
 		data->left_mouse.pos = point3(x, y, 0);
-		orbit_camera(data->scene->camera, &move, 300);
+		orbit_camera(data->scene->camera, &move, SENSTV);
+		do_render(data);
 	}
-	camera_set(cam, cam->fov, cam->orig);
-	do_render(data);
 	return (0);
 }
