@@ -6,7 +6,7 @@
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 17:11:12 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/13 06:58:36 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/14 15:28:49 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	camera_set(t_camera *cam, float fov, const t_point3 orig)
 	cam->viewport_w = cam->viewport_h * aspect_ratio;
 	cam->horizontal = vmul(cam->dir[1], cam->viewport_w);
 	cam->vertical = vmul(cam->dir[2], cam->viewport_h);
-	cam->lower_left_corner = vsub_(cam->orig,
+	cam->left_bottom = vsub_(cam->orig,
 			vadd_(vadd_(vmul(cam->horizontal, 0.5), vmul(cam->vertical, 0.5)),
 				w));
 }
