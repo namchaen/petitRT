@@ -72,6 +72,7 @@ t_cylinder	*cylinder_new(t_point3 *point, \
 	cy->normal = vdiv(*normal, vnorm(*normal));
 	cy->h = vmul(cy->normal, height);
 	cy->center_top = vadd_(*point, cy->h);
+	cy->center = vadd_(*point, vmul(cy->h, 0.5));
 	cy->radius = radius;
 	cy->radius2 = cy->radius * cy->radius;
 	cy->height = height;

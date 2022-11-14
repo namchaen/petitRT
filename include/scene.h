@@ -6,7 +6,7 @@
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:41:13 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/11 20:39:09 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/13 06:43:23 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,10 @@ t_light		*light_new(t_point3 *light_origin, \
 						t_color3 *light_color, float bright_ratio);
 void		camera_set(t_camera *cam, float fov, const t_point3 orig);
 void		rotate_camera(int keycode, t_camera *cam);
+void		move_camera(int keycode, t_camera *cam);
+
+void		move_object(int keycode, t_object *object);
+void		rotate_object(int keycode, t_object *object);
+void		orbit_camera(t_camera *cam, t_vec3 *move, float sensitivity);
 
 #endif

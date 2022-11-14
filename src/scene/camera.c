@@ -6,7 +6,7 @@
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 17:11:12 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/11 20:39:23 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/13 06:58:36 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,44 @@ void	rotate_camera(int keycode, t_camera *cam)
 	}
 	*target = vunit(vrotate(theta, *axis, *target));
 	*target2 = vunit(vrotate(theta, *axis, *target2));
+	camera_set(cam, cam->fov, cam->orig);
+}
+
+void	move_camera(int keycode, t_camera *cam)
+{
+	if (keycode == KEY_W)
+		cam->orig.y += 1;
+	else if (keycode == KEY_A)
+		cam->orig.x -= 1;
+	else if (keycode == KEY_S)
+		cam->orig.y -= 1;
+	else if (keycode == KEY_D)
+		cam->orig.x += 1;
+	else if (keycode == KEY_Z)
+		cam->orig.z -= 1;
+	else if (keycode == KEY_X)
+		cam->orig.z += 1;
+	camera_set(cam, cam->fov, cam->orig);
+}
+
+void	orbit_camera(t_camera *cam, t_vec3 *move, float sensitivity)
+{
+	float		theta[2];
+	float		dist;
+	t_point3	center;
+
+	theta[0] = 0;
+	theta[1] = 0;
+	if (move->x)
+		theta[0] = -move->x / sensitivity;
+	if (move->y)
+		theta[1] = move->y / sensitivity;
+	center = point3(0, 0, 0);
+	dist = vnorm(vsub_(center, cam->orig));
+	cam->dir[0] = vunit(vrotate(theta[0], vec3(0, 1, 0), cam->dir[0]));
+	cam->dir[1] = vunit(vrotate(theta[0], vec3(0, 1, 0), cam->dir[1]));
+	cam->dir[0] = vunit(vrotate(theta[1], vec3(1, 0, 0), cam->dir[0]));
+	cam->dir[2] = vunit(vrotate(theta[1], vec3(1, 0, 0), cam->dir[2]));
+	cam->orig = vadd_(center, vmul(cam->dir[0], -dist));
+	camera_set(cam, cam->fov, cam->orig);
 }
