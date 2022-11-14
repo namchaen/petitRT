@@ -6,7 +6,7 @@
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 17:19:35 by chaejkim          #+#    #+#             */
-/*   Updated: 2022/11/14 01:49:21 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/14 12:28:22 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,5 +115,6 @@ static t_hit_record	set_record(t_object *cy_obj, t_ray *ray,
 		rec.normal = vunit(vsub_(rec.p,
 					vadd_(cy->center_base, vmul(cy->normal, height))));
 	rec.albedo = cy_obj->albedo;
+	record_set_face_normal(ray, &rec);
 	return (rec);
 }
