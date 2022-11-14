@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:41:13 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/13 06:43:23 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/14 15:53:39 by namkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 # define SCENE_H
 
 # include "struct.h"
-# define THETA 0.2
+# define THETA 0.21
+# define ASPECT_RATIO 0.562500
 
 t_scene		*scene_init(char *fname);
 t_camera	*camera_new(const t_point3 orig, const t_vec3 dir, float fov);
