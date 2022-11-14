@@ -6,7 +6,7 @@
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:51:24 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/11 20:39:16 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/14 09:29:23 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ t_bool	is_color_in_range(t_color3 *color);
 
 void	add_light(t_parse_info *info, int i, char *line, t_scene *scene);
 void	add_camera(t_parse_info *info, int i, char *line, t_scene *scene);
+void	add_multi_light(t_parse_info *info, int i, char *line, t_scene *scene);
 
 void	add_plane(t_parse_info *info, int i, char *line, t_scene *scene);
 void	add_sphere(t_parse_info *info, int i, char *line, t_scene *scene);

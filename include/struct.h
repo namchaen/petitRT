@@ -6,7 +6,7 @@
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:55:53 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/13 06:58:15 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/14 11:04:41 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ typedef struct s_eqtn
 	float	discriminant;
 	float	sqrtd;
 	float	root;
-	t_bool	root_modified;
+	float	root1;
 }			t_eqtn;
 
 #endif

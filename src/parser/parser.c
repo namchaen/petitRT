@@ -6,7 +6,7 @@
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 17:10:09 by chaejkim          #+#    #+#             */
-/*   Updated: 2022/11/11 20:40:33 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/14 09:26:50 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	parser(char *fname, t_scene *scene)
 		add_obj = set_add_obj(line);
 		if (add_obj)
 			add_obj(&info, i, line, scene);
-		else if (*line != '\n' && *(line + 1) != '#')
+		else if (*line != '\n' && *line != '#')
 			parse_error("invalid identifier", i);
 		free(line);
 		line = get_next_line(fd);
@@ -84,6 +84,8 @@ static void	*set_add_obj(char *line)
 		return (add_sphere);
 	else if (*line == 'c' && *(line + 1) == 'y')
 		return (add_cylinder);
+	else if (*line == 'l')
+		return (add_multi_light);
 	return (NULL);
 }
 

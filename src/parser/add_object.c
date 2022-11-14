@@ -6,7 +6,7 @@
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 17:10:00 by chaejkim          #+#    #+#             */
-/*   Updated: 2022/11/11 19:51:43 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/14 09:34:23 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,24 @@ void	add_camera(t_parse_info *info, int i, char *line, t_scene *scene)
 		|| info->fov < 0 || info->fov > 180)
 		parse_error("out of range", i);
 	scene->camera = camera_new(info->p, info->n, info->fov);
+}
+
+void	add_multi_light(t_parse_info *info, int i, char *line, t_scene *scene)
+{
+	t_light	*light;
+
+	if (info->single_light == FALSE && scene->light == NULL)
+		info->single_light = TRUE;
+	else if (info->single_light != TRUE)
+		parse_error("single light", i);
+	if (line_scanf(i, line, LSCANF_MULTI_L, &info->p.x, &info->p.y, &info->p.z
+			, &info->ratio, &info->c.x, &info->c.y, &info->c.z) != 7)
+		parse_error("unmatched number", i);
+	if (is_color_in_range(&info->c) == FALSE
+		|| info->ratio < EPSILON)
+		parse_error("out of range", i);
+	info->c = vmul(info->c, RGB_NORMAL);
+	light = light_new(&info->p, &info->c, info->ratio);
+	info->c = vec3(0, 0, 0);
+	oadd(&scene->light, object_new(LIGHT, light, &info->c));
 }
