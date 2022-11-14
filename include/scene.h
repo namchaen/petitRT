@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:41:13 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/14 16:42:52 by namkim           ###   ########.fr       */
+/*   Updated: 2022/11/14 23:40:42 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SCENE_H
 
 # include "struct.h"
+# define DEGREE 0.02
 # define THETA 0.21
 # define ASPECT_RATIO 0.562500
 # define ASPECT_RATIO_2 1.777
