@@ -6,7 +6,7 @@
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 17:10:00 by chaejkim          #+#    #+#             */
-/*   Updated: 2022/11/15 05:06:31 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/15 05:06:41 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	add_light(t_parse_info *info, int i, char *line, t_scene *scene)
 		parse_error("out of range", i);
 	info->c = vmul(info->c, RGB_NORMAL);
 	light = light_new(&info->p, &info->c, info->ratio);
+	printf("L line [%02d]: p(%f,%f,%f) r:%f c(%f,%f,%f) \n", i, info->p.x, info->p.y, info->p.z
+		, info->ratio, info->c.x, info->c.y, info->c.z);
 	info->c = vec3(0, 0, 0);
 	oadd(&scene->light, object_new(LIGHT, light, &info->c));
 }
@@ -45,6 +47,8 @@ void	add_camera(t_parse_info *info, int i, char *line, t_scene *scene)
 		|| info->fov < 0 || info->fov > 180)
 		parse_error("out of range", i);
 	scene->camera = camera_new(info->p, info->n, info->fov);
+	printf("C line [%02d]: p(%f,%f,%f) n(%f,%f,%f) fov:%f\n", i, info->p.x, info->p.y, info->p.z
+		, info->n.x, info->n.y, info->n.z, info->fov);
 }
 
 void	add_multi_light(t_parse_info *info, int i, char *line, t_scene *scene)
@@ -61,6 +65,8 @@ void	add_multi_light(t_parse_info *info, int i, char *line, t_scene *scene)
 		parse_error("out of range", i);
 	info->c = vmul(info->c, RGB_NORMAL);
 	light = light_new(&info->p, &info->c, info->ratio);
+	printf("l line [%02d]: p(%f,%f,%f) r:%f c(%f,%f,%f) \n", i, info->p.x, info->p.y, info->p.z
+		, info->ratio, info->c.x, info->c.y, info->c.z);
 	info->c = vec3(0, 0, 0);
 	oadd(&scene->light, object_new(LIGHT, light, &info->c));
 }

@@ -6,7 +6,7 @@
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 17:10:09 by chaejkim          #+#    #+#             */
-/*   Updated: 2022/11/15 05:06:00 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/15 05:30:26 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,6 @@ static void	set_ambient_light(t_parse_info *info,
 		parse_error("out of range", i);
 	info->c = vmul(info->c, RGB_NORMAL);
 	scene->ambient = vmul(info->c, info->ratio);
+	//printf("A line [%02d]: (%f) %f,%f,%f\n", i, info->ratio, info->c.x, info->c.y, info->c.z);
+	printf("A line [%02d]: (%f) %f,%f,%f\n", i, info->ratio, scene->ambient.x, scene->ambient.y, scene->ambient.z);
 }
