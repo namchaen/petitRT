@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:55:53 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/14 15:28:42 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/16 20:10:58 by namkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,12 +144,13 @@ typedef struct s_rt_data
 {
 	void		*mlx;
 	void		*mlx_win;
-	int			sample_size;
 	int			width;
 	int			height;
 	t_img		img;
 	t_scene		*scene;
 	t_mouse		left_mouse;
+	t_bool		anti_ali;
+	int			sample_size;
 	t_object	*this;
 }			t_rt_data;
 

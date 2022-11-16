@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 17:10:06 by chaejkim          #+#    #+#             */
-/*   Updated: 2022/11/16 15:54:07 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/16 18:25:02 by namkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ t_bool	is_point_in_range(t_point3 *point)
 	if (fabsf(point->x) <= FLT_MIN)
 		point->x = 0;
 	if (fabsf(point->y) <= FLT_MIN)
-		point->x = 0;
+		point->y = 0;
 	if (fabsf(point->z) <= FLT_MIN)
-		point->x = 0;
+		point->z = 0;
 	return (TRUE);
 }

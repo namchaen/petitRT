@@ -6,7 +6,7 @@
 /*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 16:24:58 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/14 16:54:52 by namkim           ###   ########.fr       */
+/*   Updated: 2022/11/16 20:30:17 by namkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,24 @@ static int	key_input(int keycode, t_rt_data *data)
 		else
 			rotate_camera(keycode, cam);
 	}
-	if (keycode == KEY_W || keycode == KEY_A
-		|| keycode == KEY_S || keycode == KEY_D
-		|| keycode == KEY_Z || keycode == KEY_X)
+	else if (keycode == KEY_W || keycode == KEY_A || keycode == KEY_S \
+		|| keycode == KEY_D || keycode == KEY_Z || keycode == KEY_X)
 	{
 		if (data->this)
 			move_object(keycode, data->this);
 		else
 			move_camera(keycode, cam);
+	}
+	if (keycode >= KEY_L_CLAMP && keycode <= KEY_R_CLAMP)
+	{
+		if (data->anti_ali == TRUE && keycode == KEY_L_CLAMP)
+			data->sample_size -= 5;
+		else if (data->anti_ali == TRUE && keycode == KEY_R_CLAMP)
+			data->sample_size += 5;
+		else if (keycode == KEY_Q_MARK)
+			data->anti_ali = !data->anti_ali;
+		if (data->sample_size < 0)
+			data->sample_size = 1;
 	}
 	do_render(data);
 	return (0);
