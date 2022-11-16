@@ -6,73 +6,87 @@
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 12:38:58 by chaejkim          #+#    #+#             */
-/*   Updated: 2022/11/11 16:59:39 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/16 15:47:06 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <limits.h>
 #include <math.h>
+#include <float.h>
 
-static size_t	get_len(long long_i, char sign)
+#include <stdio.h>
+
+static double	set_i(const char *str)
 {
-	size_t	len;
+	double	rval;
+	long	n;
 
-	len = 1;
-	if (long_i < 0)
-		long_i *= -1;
-	while (long_i > 9)
-	{
-		len++;
-		long_i /= 10;
-	}
-	if (sign == '+' || sign == '-')
-		len += 1;
-	return (len);
-}
-
-static float	set_d(const char *str)
-{
-	float	rval;
-	int		cnt;
-	float	digit;
-
-	cnt = -1;
 	rval = 0;
-	digit = 1;
-	while (++cnt < 7 && *str >= '0' && *str <= '9')
+	n = 0;
+	while (*str >= '0' && *str <= '9')
 	{
-		rval = rval * 10 + (*str - '0');
+		rval *= 10;
+		n = (n * 10) + (*str - '0');
+		if (n > 100000000000)
+		{
+			rval += n;
+			n = 0;
+		}
+		if (rval >= FLT_MAX)
+			return (FLT_MAX);
 		str++;
-		digit *= 0.1;
 	}
-	rval *= digit;
+	if (n)
+		rval += n;
 	return (rval);
 }
 
-float	ft_atof(const char *str)
+static double	set_d(const char *str)
 {
-	float	rval;
-	long	i;
+	double	rval;
+	double	digit;
+	long	n;
+
+	rval = 0;
+	digit = 1;
+	n = 0;
+	while (digit * 0.1 > FLT_MIN && *str >= '0' && *str <= '9')
+	{
+		digit *= 0.1;
+		n = (n * 10) + (*str - '0');
+		if (n > 100000000000)
+		{
+			rval += (n * digit);
+			n = 0;
+		}
+		str++;
+	}
+	if (n)
+		rval += (n * digit);
+	return (rval);
+}
+
+double	ft_atof(const char *str)
+{
+	double	rval;
 	int		sign;
 
 	while (ft_isspace(*str))
 		str++;
-	i = ft_strtol(str);
 	sign = 1;
-	if (*str == '-')
-		sign = -1;
-	str += get_len(i, *str);
-	rval = i;
-	if (i == LONG_MAX || i == LONG_MIN)
+	if (*str == '+' || *str == '-')
 	{
-		while (*str >= '0' && *str <= '9')
-		{
-			rval *= 10;
-			str++;
-		}
+		if (*str++ == '-')
+			sign = -1;
 	}
-	if (*str != '.')
-		return (rval);
-	return (rval + sign * set_d(++str));
+	if (*str < '0' || *str > '9')
+		return (0);
+	rval = set_i(str);
+	while (*str >= '0' && *str <= '9')
+		str++;
+	if (rval == FLT_MAX || *str != '.')
+		return (sign * rval);
+	rval += set_d(++str);
+	return (sign * rval);
 }

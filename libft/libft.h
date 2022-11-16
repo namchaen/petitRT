@@ -6,7 +6,7 @@
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:28:41 by chaejkim          #+#    #+#             */
-/*   Updated: 2022/11/05 22:22:51 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/16 15:25:18 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	*ft_memmove(void *dst, const void *src, size_t len);
 int		ft_memcmp(const char *s1, const char *s2, size_t n);
 long	ft_strtol(const char *str);
 int		ft_atoi(const char *str);
-float	ft_atof(const char *str);
+double	ft_atof(const char *str);
 void	*ft_calloc(size_t count, size_t size);
 char	*ft_strdup(const char *s1);
 char	*ft_strndup(const char *s1, size_t n);
