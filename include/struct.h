@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:55:53 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/16 20:10:58 by namkim           ###   ########.fr       */
+/*   Updated: 2022/11/16 20:56:36 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ typedef struct s_cylinder
 typedef struct s_scene
 {
 	t_camera		*camera;
+	t_object		*cameras;
 	t_object		*object;
 	t_object		*light;
 	t_color3		ambient;

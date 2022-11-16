@@ -6,7 +6,7 @@
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 17:10:00 by chaejkim          #+#    #+#             */
-/*   Updated: 2022/11/16 13:05:49 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/16 20:33:03 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 
 void	add_light(t_parse_info *info, int i, char *line, t_scene *scene)
 {
-	t_light	*light;
+	t_light		*light;
+	t_color3	color;
 
 	if (info->single_light != FALSE || scene->light)
 		parse_error("redefinition of lighting", i);
@@ -28,14 +29,19 @@ void	add_light(t_parse_info *info, int i, char *line, t_scene *scene)
 		|| info->ratio < 0 || info->ratio > 1
 		|| is_point_in_range(&info->p) == FALSE)
 		parse_error("out of range", i);
-	info->c = vmul(info->c, RGB_NORMAL);
-	light = light_new(&info->p, &info->c, info->ratio);
-	info->c = vec3(0, 0, 0);
-	oadd(&scene->light, object_new(LIGHT, light, &info->c));
+	color = vmul(info->c, RGB_NORMAL);
+	light = light_new(&info->p, &color, info->ratio);
+	color = vec3(0, 0, 0);
+	oadd(&scene->light, object_new(LIGHT, light, &color));
+	printf("[%02d, SL]: p(%.2f,%.2f,%.2f) (%.2f) c(%.f,%.f,%.f) \n",
+		i, info->p.x, info->p.y, info->p.z, info->ratio,
+		info->c.x, info->c.y, info->c.z);
 }
 
 void	add_camera(t_parse_info *info, int i, char *line, t_scene *scene)
 {
+	t_color3	color;
+
 	if (info->single_camera != FALSE || scene->camera)
 		parse_error("redefinition of camera", i);
 	info->single_camera = TRUE;
@@ -47,11 +53,17 @@ void	add_camera(t_parse_info *info, int i, char *line, t_scene *scene)
 		|| is_point_in_range(&info->p) == FALSE)
 		parse_error("out of range", i);
 	scene->camera = camera_new(info->p, info->n, info->fov);
+	color = vec3(0, 0, 0);
+	oadd(&scene->cameras, object_new(CAMERA, scene->camera, &color));
+	printf("[%02d, CM]: p(%.2f,%.2f,%.2f) n(%.2f,%.2f,%.2f) fov:%.2f\n",
+		i, info->p.x, info->p.y, info->p.z,
+		info->n.x, info->n.y, info->n.z, info->fov);
 }
 
 void	add_multi_light(t_parse_info *info, int i, char *line, t_scene *scene)
 {
-	t_light	*light;
+	t_light		*light;
+	t_color3	color;
 
 	if (info->single_light == TRUE)
 		parse_error("single light", i);
@@ -62,8 +74,11 @@ void	add_multi_light(t_parse_info *info, int i, char *line, t_scene *scene)
 		|| info->ratio < 0 || info->ratio > 1
 		|| is_point_in_range(&info->p) == FALSE)
 		parse_error("out of range", i);
-	info->c = vmul(info->c, RGB_NORMAL);
-	light = light_new(&info->p, &info->c, info->ratio);
-	info->c = vec3(0, 0, 0);
-	oadd(&scene->light, object_new(LIGHT, light, &info->c));
+	color = vmul(info->c, RGB_NORMAL);
+	light = light_new(&info->p, &color, info->ratio);
+	color = vec3(0, 0, 0);
+	oadd(&scene->light, object_new(LIGHT, light, &color));
+	printf("[%02d, ML]: p(%.2f,%.2f,%.2f) (%.2f) c(%.f,%.f,%.f) \n",
+		i, info->p.x, info->p.y, info->p.z, info->ratio,
+		info->c.x, info->c.y, info->c.z);
 }

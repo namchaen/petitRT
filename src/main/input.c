@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 16:24:58 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/16 20:30:17 by namkim           ###   ########.fr       */
+/*   Updated: 2022/11/16 20:56:34 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,26 +33,17 @@ static int	key_input(int keycode, t_rt_data *data)
 	t_camera	*cam;
 
 	cam = data->scene->camera;
-	if (keycode == ESC && data->this == NULL)
+	if (keycode == ESC && data->this == data->scene->cameras)
 		ft_exit(data);
 	else if (keycode == ESC)
-		data->this = NULL;
+		data->this = data->scene->cameras;
 	else if (keycode <= KEY_UP && keycode >= KEY_LEFT)
-	{
-		if (data->this)
-			rotate_object(keycode, data->this);
-		else
-			rotate_camera(keycode, cam);
-	}
-	else if (keycode == KEY_W || keycode == KEY_A || keycode == KEY_S \
-		|| keycode == KEY_D || keycode == KEY_Z || keycode == KEY_X)
-	{
-		if (data->this)
-			move_object(keycode, data->this);
-		else
-			move_camera(keycode, cam);
-	}
-	if (keycode >= KEY_L_CLAMP && keycode <= KEY_R_CLAMP)
+		rotate_object(keycode, data->this);
+	else if (keycode == KEY_W || keycode == KEY_A
+		|| keycode == KEY_S || keycode == KEY_D
+		|| keycode == KEY_Z || keycode == KEY_X)
+		move_object(keycode, data->this);
+	else if (keycode >= KEY_L_CLAMP && keycode <= KEY_R_CLAMP)
 	{
 		if (data->anti_ali == TRUE && keycode == KEY_L_CLAMP)
 			data->sample_size -= 5;
@@ -74,13 +65,15 @@ static int	mouse_press_input(int mousecode, int x, int y, t_rt_data *data)
 	(void)x;
 	(void)y;
 	cam = data->scene->camera;
-	if (mousecode == LEFT_CLICK && is_in_window(x, y, data))
+	if (!is_in_window(x, y, data))
+		return (0);
+	if (mousecode == LEFT_CLICK)
 	{
 		data->left_mouse.press = TRUE;
 		data->left_mouse.pos = point3(x, y, 0);
 		return (0);
 	}
-	if (mousecode == RIGHT_CLICK && is_in_window(x, y, data))
+	if (mousecode == RIGHT_CLICK)
 	{
 		data->this = choose_object(x, y, data);
 		return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 17:18:31 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/14 16:44:50 by namkim           ###   ########.fr       */
+/*   Updated: 2022/11/16 20:33:58 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_scene	*scene_init(char *fname)
 		return (NULL);
 	scene->light = NULL;
 	scene->camera = NULL;
+	scene->cameras = NULL;
 	scene->object = NULL;
 	parser(fname, scene);
 	return (scene);
