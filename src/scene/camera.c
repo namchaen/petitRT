@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 17:11:12 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/14 16:45:41 by namkim           ###   ########.fr       */
+/*   Updated: 2022/11/14 23:58:10 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,21 +76,26 @@ void	move_camera(int keycode, t_camera *cam)
 void	orbit_camera(t_camera *cam, t_vec3 *move, float sensitivity)
 {
 	float		theta[2];
-	float		dist;
-	t_point3	center;
 
 	theta[0] = 0;
 	theta[1] = 0;
 	if (move->x)
-		theta[0] = -move->x / sensitivity;
+		theta[0] = move->x / sensitivity;
 	if (move->y)
 		theta[1] = move->y / sensitivity;
-	center = point3(0, 0, 0);
-	dist = vnorm(vsub_(center, cam->orig));
-	cam->dir[0] = vunit(vrotate(theta[0], vec3(0, 1, 0), cam->dir[0]));
-	cam->dir[1] = vunit(vrotate(theta[0], vec3(0, 1, 0), cam->dir[1]));
-	cam->dir[0] = vunit(vrotate(theta[1], vec3(1, 0, 0), cam->dir[0]));
-	cam->dir[2] = vunit(vrotate(theta[1], vec3(1, 0, 0), cam->dir[2]));
-	cam->orig = vadd_(center, vmul(cam->dir[0], -dist));
+	if (fmaxf(fabs(theta[0]), fabs(theta[1])) < DEGREE)
+		return ;
+	if (fabs(theta[0]) > fabs(theta[1]))
+	{
+		cam->dir[0] = vunit(vrotate(theta[0], cam->dir[2], cam->dir[0]));
+		cam->dir[1] = vunit(vrotate(theta[0], cam->dir[2], cam->dir[1]));
+		cam->orig = vrotate(theta[0], cam->dir[2], cam->orig);
+	}
+	else
+	{
+		cam->dir[0] = vunit(vrotate(theta[1], cam->dir[1], cam->dir[0]));
+		cam->dir[2] = vunit(vrotate(theta[1], cam->dir[1], cam->dir[2]));
+		cam->orig = vrotate(theta[1], cam->dir[1], cam->orig);
+	}
 	camera_set(cam, cam->fov, cam->orig);
 }
