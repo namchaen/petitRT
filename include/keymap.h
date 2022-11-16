@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keymap.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 16:22:20 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/11 20:16:59 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/16 20:26:33 by namkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@
 # define KEY_DOWN				125
 # define KEY_LEFT				123
 # define KEY_RIGHT				124
+# define KEY_L_CLAMP			43
+# define KEY_R_CLAMP			47
+# define KEY_Q_MARK				44
 
 /* mouse */
 # define LEFT_CLICK			1

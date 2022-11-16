@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   phong_lighting.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 17:17:33 by chaejkim          #+#    #+#             */
 /*   Updated: 2022/11/16 18:22:38 by chaejkim         ###   ########.fr       */

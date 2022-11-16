@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 17:10:06 by chaejkim          #+#    #+#             */
 /*   Updated: 2022/11/16 18:24:58 by chaejkim         ###   ########.fr       */
