@@ -6,7 +6,7 @@
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 17:10:09 by chaejkim          #+#    #+#             */
-/*   Updated: 2022/11/16 12:02:56 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/16 12:40:46 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ static void	set_ambient_light(t_parse_info *info,
 			&info->ratio, &info->c.x, &info->c.y, &info->c.z) != 4)
 		parse_error("unmatched number", i);
 	if (is_color_in_range(&info->c) == FALSE
-		|| info->ratio <= EPSILON)
+		|| info->ratio <= EPSILON || info->ratio > 1)
 		parse_error("out of range", i);
 	info->c = vmul(info->c, RGB_NORMAL);
 	scene->ambient = vmul(info->c, info->ratio);
