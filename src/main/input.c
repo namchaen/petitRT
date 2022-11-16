@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 16:24:58 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/16 20:56:34 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/16 21:13:20 by namkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,10 @@ static int	key_input(int keycode, t_rt_data *data)
 	else if (keycode == ESC)
 		data->this = data->scene->cameras;
 	else if (keycode <= KEY_UP && keycode >= KEY_LEFT)
-		rotate_object(keycode, data->this);
-	else if (keycode == KEY_W || keycode == KEY_A
-		|| keycode == KEY_S || keycode == KEY_D
-		|| keycode == KEY_Z || keycode == KEY_X)
-		move_object(keycode, data->this);
+		rotate_object(keycode, data);
+	else if (keycode == KEY_W || keycode == KEY_A || keycode == KEY_S
+		|| keycode == KEY_D || keycode == KEY_Z || keycode == KEY_X)
+		move_object(keycode, data);
 	else if (keycode >= KEY_L_CLAMP && keycode <= KEY_R_CLAMP)
 	{
 		if (data->anti_ali == TRUE && keycode == KEY_L_CLAMP)
@@ -53,8 +52,8 @@ static int	key_input(int keycode, t_rt_data *data)
 			data->anti_ali = !data->anti_ali;
 		if (data->sample_size < 0)
 			data->sample_size = 1;
+		do_render(data);
 	}
-	do_render(data);
 	return (0);
 }
 

@@ -3,28 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   rotate_object.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 00:35:57 by chaejkim          #+#    #+#             */
-/*   Updated: 2022/11/16 20:06:17 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/16 21:12:26 by namkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scene.h"
 #include "keymap.h"
+#include "petitrt.h"
 
 static void	rotate_plane(int keycode, t_plane *pl);
 static void	rotate_cylinder(int keycode, t_cylinder *cy);
 static void	cylinder_set(t_cylinder *cy);
 
-void	rotate_object(int keycode, t_object *object)
+void	rotate_object(int keycode, t_rt_data *data)
 {
+	t_object	*object;
+
+	object = data->this;
 	if (object->type == CAMERA)
 		rotate_camera(keycode, object->element);
 	else if (object->type == PL)
 		rotate_plane(keycode, object->element);
 	else if (object->type == CY)
 		rotate_cylinder(keycode, object->element);
+	do_render(data);
 }
 
 static void	rotate_plane(int keycode, t_plane *pl)

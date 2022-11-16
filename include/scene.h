@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:41:13 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/14 23:40:42 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/16 21:13:03 by namkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void		camera_set(t_camera *cam, float fov, const t_point3 orig);
 void		rotate_camera(int keycode, t_camera *cam);
 void		move_camera(int keycode, t_camera *cam);
 
-void		move_object(int keycode, t_object *object);
-void		rotate_object(int keycode, t_object *object);
+void		move_object(int keycode, t_rt_data *data);
+void		rotate_object(int keycode, t_rt_data *data);
 void		orbit_camera(t_camera *cam, t_vec3 *move, float sensitivity);
 
 #endif

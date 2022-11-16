@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   choose_object.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 00:36:24 by chaejkim          #+#    #+#             */
-/*   Updated: 2022/11/16 20:03:53 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/16 21:15:39 by namkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void	prnt_sphere_info(t_sphere *sp, t_color3 *color)
 {
 	printf("Select sphere!\n");
 	printf("\tp(%.2f,%.2f,%.2f) radius:%.2f c(%.2f,%.2f,%.2f)\n",
-		sp->center.x, sp->center.y, sp->center.z,\
+		sp->center.x, sp->center.y, sp->center.z, \
 		sp->radius, color->x, color->y, color->z);
 }
 

@@ -3,23 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   move_object.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 00:36:01 by chaejkim          #+#    #+#             */
-/*   Updated: 2022/11/16 20:39:12 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/16 21:12:02 by namkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scene.h"
 #include "keymap.h"
+#include "petitrt.h"
 
 static void	move_plane(int keycode, t_plane *pl);
 static void	move_sphere(int keycode, t_sphere *sp);
 static void	move_cylinder(int keycode, t_cylinder *cy);
 static void	cylinder_set(t_cylinder *cy);
 
-void	move_object(int keycode, t_object *object)
+void	move_object(int keycode, t_rt_data *data)
 {
+	t_object	*object;
+
+	object = data->this;
 	if (object->type == CAMERA)
 		move_camera(keycode, object->element);
 	else if (object->type == SP)
@@ -28,6 +32,7 @@ void	move_object(int keycode, t_object *object)
 		move_plane(keycode, object->element);
 	else if (object->type == CY)
 		move_cylinder(keycode, object->element);
+	do_render(data);
 }
 
 static void	move_plane(int keycode, t_plane *pl)
