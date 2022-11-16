@@ -6,7 +6,7 @@
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 17:10:09 by chaejkim          #+#    #+#             */
-/*   Updated: 2022/11/15 05:06:00 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/16 12:02:56 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	parser(char *fname, t_scene *scene)
 		line = get_next_line(fd);
 		i++;
 	}
+	close(fd);
 	if (info.single_ambient == FALSE || !scene->camera || !scene->light)
 		ft_error("no A or C or L");
 }
