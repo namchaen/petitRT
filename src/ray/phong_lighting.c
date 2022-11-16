@@ -6,7 +6,7 @@
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 17:17:33 by chaejkim          #+#    #+#             */
-/*   Updated: 2022/11/14 12:30:47 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/16 18:22:38 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,13 @@ static t_color3	point_light_get(const t_scene *scene, const t_light *light)
 
 	light_dir = vsub_(light->orig, scene->rec.p);
 	if (is_in_shadow(scene, light_dir))
-		return (vadd_(color3(0, 0, 0), scene->ambient));
+		return (color3(0, 0, 0));
 	light_dir = vunit(light_dir);
 	kd = fmax(vdot(scene->rec.normal, light_dir), 0.0);
 	diffuse = vmul(light->light_color, kd);
 	specular = cal_specular(scene, light, light_dir);
 	brightness = light->bright_ratio * LUMEN;
-	return (vmul(vadd_(vadd_(diffuse, specular), scene->ambient), brightness));
+	return (vmul(vadd_(diffuse, specular), brightness));
 }
 
 static t_bool	is_in_shadow(const t_scene *scene, t_vec3 light_dir)

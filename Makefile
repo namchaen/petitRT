@@ -4,14 +4,10 @@ CC := cc
 FLAGS := -Wall -Werror -Wextra #-g -fsanitizer=address
 
 LFT := libft/libft.a
-#MLX := mlx/libmlx.a
-#MLX := mlx/
+MLX := mlx/libmlx.a
 
 INC := -Iinclude -Ilibft -Imlx
 LIB := -Llibft -lft -Lmlx -lmlx -framework OpenGL -framework AppKit
-
-#INC := -Iinclude -Ilibft -Imlx
-#LIB := -Llibft -lft -Lmlx -lmlx -framework OpenGL -framework AppKit
 
 MAIN_SRC := $(addprefix src/main/, main.c utils.c input.c render.c \
 			  choose_object.c)
@@ -33,14 +29,11 @@ SRC := $(MAIN_SRC) $(SCENE_SRC) $(RAY_SRC) $(VECTOR_SRC) $(PARSER_SRC) $(UTILS_S
 OBJ := $(patsubst src%, obj%, $(SRC:.c=.o))
 
 obj/%.o : src/%.c
-#	$(CC) $(INC) -o $@ -c $<
 	$(CC) $(FLAGS) $(INC) -o $@ -c $<
 
-all: $(LFT) obj $(NAME)
-#all: $(LFT) $(MLX) obj $(NAME)
+all: $(LFT) $(MLX) obj $(NAME)
 
 $(NAME) : $(OBJ)
-#	$(CC) -o $@ $^ $(LIB)
 	$(CC) $(FLAGS) -o $@ $^ $(LIB)
 
 $(LFT):
@@ -49,13 +42,12 @@ $(MLX):
 	$(MAKE) -C mlx
 
 clean:
-#	@$(MAKE) -s -C libft $@
-#	@$(MAKE) -s -C mlx $@
+	@$(MAKE) -s -C libft $@
+	@$(MAKE) -s -C mlx $@
 	rm -rf obj
 
 fclean: clean
-#	@$(MAKE) -s -C libft $@
-#	@$(MAKE) -s -C mlx $@
+	@$(MAKE) -s -C libft $@
 	@rm -rf $(NAME)
 
 obj:
@@ -68,3 +60,5 @@ obj:
 	@mkdir -p obj/utils
 
 re: fclean all
+
+.PHONY: all clean bonus fclean re
