@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 16:28:36 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/16 20:11:22 by namkim           ###   ########.fr       */
+/*   Updated: 2022/11/16 20:56:35 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,5 @@ static void	rt_data_init(t_rt_data *data, int width)
 	data->anti_ali = TRUE;
 	data->left_mouse.press = FALSE;
 	data->left_mouse.pos = point3(0, 0, 0);
+	data->this = data->scene->cameras;
 }

@@ -6,7 +6,7 @@
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 00:36:01 by chaejkim          #+#    #+#             */
-/*   Updated: 2022/11/13 00:36:02 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/16 20:39:12 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ static void	cylinder_set(t_cylinder *cy);
 
 void	move_object(int keycode, t_object *object)
 {
-	if (object->type == SP)
+	if (object->type == CAMERA)
+		move_camera(keycode, object->element);
+	else if (object->type == SP)
 		move_sphere(keycode, object->element);
 	else if (object->type == PL)
 		move_plane(keycode, object->element);

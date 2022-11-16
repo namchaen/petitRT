@@ -6,7 +6,7 @@
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 00:35:57 by chaejkim          #+#    #+#             */
-/*   Updated: 2022/11/13 00:35:58 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/16 20:06:17 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ static void	cylinder_set(t_cylinder *cy);
 
 void	rotate_object(int keycode, t_object *object)
 {
-	if (object->type == PL)
+	if (object->type == CAMERA)
+		rotate_camera(keycode, object->element);
+	else if (object->type == PL)
 		rotate_plane(keycode, object->element);
 	else if (object->type == CY)
 		rotate_cylinder(keycode, object->element);

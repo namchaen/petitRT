@@ -1,7 +1,7 @@
 NAME = miniRT
 
 CC := cc
-FLAGS := -Wall -Werror -Wextra #-g -fsanitizer=address
+FLAGS := -Wall -Werror -Wextra #-g -fsanitize=address
 
 LFT := libft/libft.a
 MLX := mlx/libmlx.a

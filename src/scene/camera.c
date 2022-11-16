@@ -6,7 +6,7 @@
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 17:11:12 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/14 23:58:10 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/16 18:49:19 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ void	camera_set(t_camera *cam, float fov, const t_point3 orig)
 	cam->left_bottom = vsub_(cam->orig,
 			vadd_(vadd_(vmul(cam->horizontal, 0.5), vmul(cam->vertical, 0.5)),
 				w));
+	printf("camera set! (fov : %f)\n", cam->fov);
+	vprnt("\tcam->orig", &cam->orig);
+	vprnt("\tcam->dir[0]", &cam->dir[0]);
 }
 
 void	rotate_camera(int keycode, t_camera *cam)

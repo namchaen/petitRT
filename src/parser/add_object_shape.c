@@ -6,7 +6,7 @@
 /*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 17:09:55 by chaejkim          #+#    #+#             */
-/*   Updated: 2022/11/16 13:06:02 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/16 19:41:01 by chaejkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ void	add_plane(t_parse_info *info, int i, char *line, t_scene *scene)
 	pl = plane_new(&info->p, &info->n);
 	info->c = vmul(info->c, RGB_NORMAL);
 	oadd(&scene->object, object_new(PL, pl, &info->c));
+	printf("[%02d, PL]: p(%.2f,%.2f,%.2f) n(%.2f,%.2f,%.2f) c(%.f,%.f,%.f)\n",
+		i, info->p.x, info->p.y, info->p.z,
+		info->n.x, info->n.y, info->n.z, info->c.x, info->c.y, info->c.z);
 }
 
 void	add_sphere(t_parse_info *info, int i, char *line, t_scene *scene)
@@ -45,6 +48,10 @@ void	add_sphere(t_parse_info *info, int i, char *line, t_scene *scene)
 	sp = sphere_new(&info->p, info->diameter / 2.0);
 	info->c = vmul(info->c, RGB_NORMAL);
 	oadd(&scene->object, object_new(SP, sp, &info->c));
+	printf("[%02d, SP]: p(%.2f,%.2f,%.2f) c(%.f,%.f,%.f)\n\
+		\b\b\b\b\b\bdiameter:%.2f\n",
+		i, info->p.x, info->p.y, info->p.z,
+		info->c.x, info->c.y, info->c.z, info->diameter);
 }
 
 void	add_cylinder(t_parse_info *info, int i, char *line, t_scene *scene)
@@ -65,4 +72,10 @@ void	add_cylinder(t_parse_info *info, int i, char *line, t_scene *scene)
 	cy = cylinder_new(&info->p, &info->n, info->diameter / 2.0, info->height);
 	info->c = vmul(info->c, RGB_NORMAL);
 	oadd(&scene->object, object_new(CY, cy, &info->c));
+	printf("[%02d, CY]: p(%.2f,%.2f,%.2f) n(%.2f,%.2f,%.2f) c(%.f,%.f,%.f)\n\
+		\b\b\b\b\b\bdiameter:%.2f height:%.2f \n",
+		i, info->p.x, info->p.y, info->p.z,
+		info->n.x, info->n.y, info->n.z,
+		info->c.x, info->c.y, info->c.z,
+		info->diameter, info->height);
 }
