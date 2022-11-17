@@ -6,14 +6,14 @@
 /*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 18:31:38 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/16 21:10:04 by namkim           ###   ########.fr       */
+/*   Updated: 2022/11/17 09:37:36 by namkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "petitrt.h"
 
 static void		my_mlx_pixel_put(t_img *img, int x, int y, t_color3 *color);
-static void		get_color(t_rt_data *data, float i, float j, t_color3 *color);
+static void		cal_color(t_rt_data *data, float i, float j, t_color3 *color);
 
 static void	my_mlx_pixel_put(t_img *img, int x, int y, t_color3 *color)
 {
@@ -25,23 +25,25 @@ static void	my_mlx_pixel_put(t_img *img, int x, int y, t_color3 *color)
 							| ((int)color->y << 8) | (int)color->z;
 }
 
-static void	get_color(t_rt_data *data, float i, float j, t_color3 *color)
+static void	cal_color(t_rt_data *data, float i, float j, t_color3 *color)
 {
 	t_scene		*scene;
 	int			k;
+	int			size;
 
 	scene = data->scene;
-	if (data->sample_size >= 2 && data->anti_ali == TRUE)
+	size = data->sample_size;
+	if (size >= 2 && data->anti_ali == TRUE)
 	{
 		k = -1;
-		while (++k < data->sample_size)
+		while (++k < size)
 		{
 			scene->ray = ray_primary(scene->camera, \
-				((float)i + ft_frand()) / (data->width - 1), \
-					((float)j + ft_frand()) / (data->height - 1));
+				((float)i + line_space(k, size)) / (data->width - 1), \
+					((float)j + line_space(k, size)) / (data->height - 1));
 			*color = vadd_(*color, ray_color(scene));
 		}
-		*color = vdiv(*color, (float)data->sample_size);
+		*color = vdiv(*color, (float)size);
 	}	
 	else
 	{
@@ -67,7 +69,7 @@ int	do_render(t_rt_data *data)
 		while (i < data->width)
 		{
 			color = color3(0, 0, 0);
-			get_color(data, i, j, &color);
+			cal_color(data, i, j, &color);
 			my_mlx_pixel_put(&data->img, i, data->height - 1 - j, &color);
 			i++;
 		}

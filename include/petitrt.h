@@ -6,7 +6,7 @@
 /*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 16:30:57 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/14 16:54:43 by namkim           ###   ########.fr       */
+/*   Updated: 2022/11/17 09:37:36 by namkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define SENSTV 300
 
 /* main/utils.c */
-float		ft_frand(void);
+float		line_space(int k, int sample_size);
 int			ft_exit(t_rt_data *data);
 t_bool		is_in_window(int x, int y, t_rt_data *data);
 

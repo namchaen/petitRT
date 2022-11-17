@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:55:53 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/16 20:56:36 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/17 09:35:16 by namkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 # define EPSILON 1e-3
 # define LUMEN 3
-# define SAMPLE_SIZE 1
+# define SAMPLE_SIZE 5
 # define RED_CROSS 17
 # define KEY_PRESS 2
 # define KEY_RELEASE 3

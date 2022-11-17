@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chaejkim <chaejkim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namkim <namkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/05 16:02:00 by namkim            #+#    #+#             */
-/*   Updated: 2022/11/13 04:53:35 by chaejkim         ###   ########.fr       */
+/*   Updated: 2022/11/17 09:37:36 by namkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "petitrt.h"
 #include <stdlib.h>
 
-float	ft_frand(void)
+float	line_space(int k, int sample_size)
 {
-	return ((float)rand() / (float)RAND_MAX);
+	return ((float)k / (float)sample_size);
 }
 
 int	ft_exit(t_rt_data *data)
